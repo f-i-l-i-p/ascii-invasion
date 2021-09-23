@@ -1,6 +1,6 @@
-import GridWorld from "./gridWorld"
-import GridRenderer from "./gridRenderer"
-import Vector from "./vector"
+import GridWorld from "./core/gridWorld"
+import GridRenderer from "./core/gridRenderer"
+import Vector from "./core/vector"
 
 class Game {
 	public readonly width: number;

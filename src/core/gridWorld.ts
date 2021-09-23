@@ -1,4 +1,5 @@
-import Vector from "./vector"
+import Vector from "./vector";
+import GameObject from "./gameObject";
 
 export default class GridWorld {
     private size: Vector;
