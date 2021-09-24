@@ -1,5 +1,5 @@
 import GridWorld from "./core/gridWorld"
-import GridRenderer from "./core/gridRenderer"
+import GridRenderer from "./core/drawing/gridRenderer"
 import Vector from "./core/vector"
 
 class Game {
@@ -32,7 +32,7 @@ class Game {
         this.context = context
 
 
-		this.gridWorld = new GridWorld(new Vector(80, 50));
+		this.gridWorld = new GridWorld(new Vector(30, 20));// 80, 50));
 		this.gridRenderer = new GridRenderer(this.gridWorld, this.context);
 
 		this.gridRenderer.render();
