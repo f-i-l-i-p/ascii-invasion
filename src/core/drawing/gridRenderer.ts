@@ -24,6 +24,10 @@ export default class GridRenderer {
         const tileHeight = this.context.canvas.height / gridHeight;
         const fontSize = Math.min(tileWidth, tileHeight);
 
+        // Fill background
+        this.context.fillStyle = "#222";
+        this.context.fillRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+
         this.context.fillStyle = "#FFFFFF";
         this.context.font = "bold " + fontSize + "px Monospace";
 

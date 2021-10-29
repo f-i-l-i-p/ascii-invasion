@@ -1,13 +1,14 @@
 import IDrawable from "../core/drawing/drawable";
 import GameObject from "../core/gameObject";
+import GridWorld from "../core/gridWorld";
 import Vector from "../core/vector";
 
 export default class Entity extends GameObject implements IDrawable {
     protected position: Vector;
     protected texture: string[][];
 
-    constructor(position: Vector) {
-        super();
+    constructor(world: GridWorld, position: Vector) {
+        super(world);
         this.position = position;
     }
 
