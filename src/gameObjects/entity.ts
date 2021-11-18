@@ -11,9 +11,18 @@ export default class Entity extends GameObject implements IDrawable {
         super(world);
         this.position = position;
     }
+    
+    public init() {
+        this.gridWorld.addDrawable(this);
+        super.init();
+    }
 
     public getPosition(): Vector {
         return this.position.copy();
+    }
+
+    public setPosition(position: Vector): void {
+        this.position.set(position);
     }
 
     public getSize(): Vector {
@@ -25,5 +34,10 @@ export default class Entity extends GameObject implements IDrawable {
 
     public viewTexture(x: number, y: number): string {
         return this.texture[y][x];
+    }
+
+    public destroy() {
+        this.gridWorld.removeDrawable(this);
+        super.destroy();
     }
 }

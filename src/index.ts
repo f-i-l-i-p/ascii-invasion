@@ -32,13 +32,13 @@ class Game {
         this.context = context
 
 
-		this.gridWorld = new GridWorld(new Vector(30, 20));// 80, 50));
+		this.gridWorld = new GridWorld(new Vector(80, 50));
 		this.gridRenderer = new GridRenderer(this.gridWorld, this.context);
 		this.gridWorld.pTick();
 
 		this.gridRenderer.render();
 
-		setInterval(() => this.pTick(), 1000);
+		setInterval(() => this.pTick(), 500);
     }
 
 	private pTick() {
@@ -49,7 +49,7 @@ class Game {
 }
 
 function startGame() {
-	let game = new Game(500, 500);
+	let game = new Game(800, 500);
 	game.init();
 }
 window.onload = startGame;
