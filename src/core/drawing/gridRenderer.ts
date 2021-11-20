@@ -30,8 +30,6 @@ export default class GridRenderer {
 
         const fontTopOffset = 0.75;
 
-        console.log(grid);
-        
         // Fill background
         this.context.fillStyle = "#222";
         this.context.fillRect(0, 0, this.context.canvas.width, this.context.canvas.height);

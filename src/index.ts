@@ -38,7 +38,7 @@ class Game {
 
 		this.gridRenderer.render();
 
-		setInterval(() => this.pTick(), 500);
+		setInterval(() => this.pTick(), 30);
     }
 
 	private pTick() {

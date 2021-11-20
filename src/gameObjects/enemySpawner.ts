@@ -4,7 +4,7 @@ import Vector from "../core/vector";
 import UFO from "./ufo";
 
 export default class EnemySpawner extends GameObject implements IPTickListener {
-    public static readonly SPAWN_DELAY = 5;
+    public static readonly SPAWN_DELAY = 50;
 
     private tickCounter = 0;
 

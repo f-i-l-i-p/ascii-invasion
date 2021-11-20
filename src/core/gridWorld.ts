@@ -6,13 +6,16 @@ import UFO from "../gameObjects/ufo";
 import IPTickListener from "./listeners/pTickListener";
 import EnemySpawner from "../gameObjects/enemySpawner";
 import Box from "../gameObjects/box";
+import Entity from "../gameObjects/entity";
 
 export default class GridWorld {
     private size: Vector;
+    private pTickCounter = 0;
 
     protected objects: GameObject[] = [];
     protected drawables: IDrawable[] = [];
     protected pTickListeners: IPTickListener[] = [];
+    protected falling: Entity[] = [];
 
     constructor(size: Vector) {
         this.size = size;
@@ -21,7 +24,7 @@ export default class GridWorld {
         spawner.init();
         this.objects.push(spawner);
 
-        let player = new Player(this, new Vector(5, 5));
+        let player = new Player(this, new Vector(size.x / 2 - 3, size.y - 7));
         player.init();
         this.objects.push(player);
         let ufo = new UFO(this, new Vector(17, 0))
@@ -69,7 +72,12 @@ export default class GridWorld {
                     if (position.y + y < 0 || position.y + y >= this.size.y || position.x + x < 0 || position.x + x >= this.size.x) {
                         continue;
                     }
-                    grid[position.y + y][position.x + x] = drawable.viewTexture(x, y);
+                    const texture = drawable.viewTexture(x, y);
+                    if (texture === ' ') {
+                        continue;
+                    }
+
+                    grid[position.y + y][position.x + x] = texture;
                 }
             }
         }
@@ -81,6 +89,16 @@ export default class GridWorld {
         for (let i = 0; i < this.pTickListeners.length; i++) {
             this.pTickListeners[i].pTick();
         }
+
+        if (this.pTickCounter % 10 == 0) {
+            for (let i = 0; i < this.falling.length; i++) {
+                let pos = this.falling[i].getPosition();
+                pos.y++;
+                this.falling[i].setPosition(pos);
+            }
+        }
+
+        this.pTickCounter++;
     }
 
     public vTick(): void {
@@ -88,7 +106,6 @@ export default class GridWorld {
     }
 
     public addObject(object: GameObject): void {
-        console.log("New object", object, this.objects.length);
         this.objects.push(object);
     }
 
@@ -126,6 +143,19 @@ export default class GridWorld {
         }
         else {
             console.warn("Could not remove listener", listener);
+        }
+    }
+
+    public addFalling(falling: Entity): void {
+        this.falling.push(falling);
+    }
+    public removeFalling(falling: Entity): void {
+        let index = this.falling.indexOf(falling);
+        if (index >= 0) {
+            this.falling.splice(index, 1);
+        }
+        else {
+            console.warn("Could not remove falling", falling);
         }
     }
 }

@@ -10,14 +10,11 @@ export default class UFO extends Entity implements IPTickListener {
 
     public init() {
         this.gridWorld.addPTickListener(this);
+        this.gridWorld.addFalling(this);
         super.init();
     }
 
     public pTick(): void {
-        this.position.y++;
-
-        console.log(this.position);
-        
         if (this.position.y >= this.gridWorld.getSize().y) {
             this.destroy();
         }
@@ -25,6 +22,7 @@ export default class UFO extends Entity implements IPTickListener {
 
     public destroy() {
         this.gridWorld.removePTickListener(this);
+        this.gridWorld.removeFalling(this);
         super.destroy();
     }
 }
