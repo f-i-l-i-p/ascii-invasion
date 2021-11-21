@@ -3,7 +3,7 @@ import GameObject from "./gameObject";
 import IDrawable from "./drawing/drawable";
 import Player from "../gameObjects/player";
 import UFO from "../gameObjects/ufo";
-import IPTickListener from "./listeners/pTickListener";
+import TickListener from "./listeners/tickListener";
 import EnemySpawner from "../gameObjects/enemySpawner";
 import Entity from "../gameObjects/entity";
 import ICollisionListener from "./listeners/collisionListener";
@@ -15,7 +15,7 @@ export default class GridWorld {
 
     protected objects: GameObject[] = [];
     protected drawables: IDrawable[] = [];
-    protected pTickListeners: IPTickListener[] = [];
+    protected pTickListeners: TickListener[] = [];
     protected collisionListeners: ICollisionListener[] = [];
     protected falling: Entity[] = [];
 
@@ -73,7 +73,7 @@ export default class GridWorld {
 
     public tick(): void {
         for (let i = 0; i < this.pTickListeners.length; i++) {
-            this.pTickListeners[i].pTick();
+            this.pTickListeners[i].tick();
         }
 
         if (this.pTickCounter % 10 == 0) {
@@ -143,10 +143,10 @@ export default class GridWorld {
         }
     }
 
-    public addPTickListener(listener: IPTickListener): void {
+    public addPTickListener(listener: TickListener): void {
         this.pTickListeners.push(listener);
     }
-    public removePTickListener(listener: IPTickListener): void {
+    public removePTickListener(listener: TickListener): void {
         let index = this.pTickListeners.indexOf(listener);
         if (index >= 0) {
             this.pTickListeners.splice(index, 1);

@@ -1,7 +1,7 @@
 import Texture from "../core/drawing/texture/texture";
 import GridWorld from "../core/gridWorld";
 import ICollisionListener from "../core/listeners/collisionListener";
-import IPTickListener from "../core/listeners/pTickListener";
+import TickListener from "../core/listeners/tickListener";
 import Vector from "../core/vector";
 import createPixels from "../textures/textureMaker";
 import { bulletData } from "../textures/pixelData";
@@ -12,7 +12,7 @@ import Color from "../core/drawing/texture/color";
 
 type BulletTypes = "Enemy" | "Player";
 
-export default class Bullet extends Entity implements IPTickListener, ICollisionListener {
+export default class Bullet extends Entity implements TickListener, ICollisionListener {
     texture = new Texture(createPixels(bulletData));
 
     public static readonly DAMAGE = 1;
@@ -38,13 +38,17 @@ export default class Bullet extends Entity implements IPTickListener, ICollision
         }
     }
 
-    public pTick(): void {
+    public tick(): void {
         if (this.counter % Bullet.DELAY == 0) {
             if (this.type === "Enemy") {
                 this.position.y++;
             } else {
                 this.position.y--;
             }
+        }
+
+        if (this.position.y < 0 || this.position.y >= this.gridWorld.getSize().y) {
+            this.destroy();
         }
 
         this.counter++;

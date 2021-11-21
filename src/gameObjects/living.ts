@@ -1,7 +1,9 @@
-import IPTickListener from "../core/listeners/pTickListener";
+import TickListener from "../core/listeners/tickListener";
+import Vector from "../core/vector";
 import Entity from "./entity";
+import Explosion from "./explosion";
 
-export default abstract class Living extends Entity implements IPTickListener {
+export default abstract class Living extends Entity implements TickListener {
     protected health = 1;
 
     public init() {
@@ -9,8 +11,9 @@ export default abstract class Living extends Entity implements IPTickListener {
         super.init();
     }
 
-    public pTick(): void {
+    public tick(): void {
         if (this.health <= 0) {
+            this.explode();
             this.onDeath();
         }
     }
@@ -36,4 +39,18 @@ export default abstract class Living extends Entity implements IPTickListener {
     }
 
     protected abstract onDeath(): void;
+
+    protected explode(): void {
+        const exp = new Explosion(this.gridWorld, this.position);
+        const expSize = exp.getSize();
+
+        const x = this.position.x + Math.floor(this.getSize().x / 2 - expSize.x / 2);
+        const y = this.position.y + Math.floor(this.getSize().y / 2 - expSize.y / 2);
+
+        exp.setPosition(new Vector(x, y));
+
+        exp.init();
+
+        this.gridWorld.addObject(exp);
+    }
 }

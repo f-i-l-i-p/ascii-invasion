@@ -1,14 +1,14 @@
 import Color from "../core/drawing/texture/color";
 import Texture from "../core/drawing/texture/texture";
 import ICollisionListener from "../core/listeners/collisionListener";
-import IPTickListener from "../core/listeners/pTickListener";
+import TickListener from "../core/listeners/tickListener";
 import createPixels from "../textures/textureMaker";
 import { ufoData } from "../textures/pixelData";
 import Entity from "./entity";
 import Living from "./living";
 import Bullet from "./bullet";
 
-export default class UFO extends Living implements IPTickListener, ICollisionListener {
+export default class UFO extends Living implements TickListener, ICollisionListener {
     texture = new Texture(createPixels(ufoData));
 
     private static readonly HEALTH = 3;
@@ -26,7 +26,7 @@ export default class UFO extends Living implements IPTickListener, ICollisionLis
         super.init();
     }
 
-    public pTick(): void {
+    public tick(): void {
         if (this.position.y >= this.gridWorld.getSize().y) {
             this.destroy();
         }
@@ -47,7 +47,7 @@ export default class UFO extends Living implements IPTickListener, ICollisionLis
         }
         this.counter++;
 
-        super.pTick();
+        super.tick();
     }
 
     public onCollision(entity: Entity) {

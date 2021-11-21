@@ -1,9 +1,9 @@
 import GameObject from "../core/gameObject";
-import IPTickListener from "../core/listeners/pTickListener";
+import TickListener from "../core/listeners/tickListener";
 import Vector from "../core/vector";
 import UFO from "./ufo";
 
-export default class EnemySpawner extends GameObject implements IPTickListener {
+export default class EnemySpawner extends GameObject implements TickListener {
     public static readonly SPAWN_DELAY = 50;
 
     private tickCounter = 0;
@@ -12,7 +12,7 @@ export default class EnemySpawner extends GameObject implements IPTickListener {
         this.gridWorld.addPTickListener(this);
     }
 
-    public pTick(): void {
+    public tick(): void {
         if (this.tickCounter >= EnemySpawner.SPAWN_DELAY) {
             this.spawnEnemy();
             this.tickCounter = 0;

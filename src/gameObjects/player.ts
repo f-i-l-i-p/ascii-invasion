@@ -1,6 +1,6 @@
 import Texture from "../core/drawing/texture/texture";
 import ICollisionListener from "../core/listeners/collisionListener";
-import IPTickListener from "../core/listeners/pTickListener";
+import TickListener from "../core/listeners/tickListener";
 import Vector from "../core/vector";
 import { playerData } from "../textures/pixelData";
 import createPixels from "../textures/textureMaker";
@@ -9,7 +9,7 @@ import Entity from "./entity";
 import Living from "./living";
 import UFO from "./ufo";
 
-export default class Player extends Living implements IPTickListener, ICollisionListener {
+export default class Player extends Living implements TickListener, ICollisionListener {
     texture = new Texture(createPixels(playerData));
 
     public readonly FIRE_DELAY = 5;
@@ -49,7 +49,7 @@ export default class Player extends Living implements IPTickListener, ICollision
         super.init();
     }
 
-    public pTick(): void {
+    public tick(): void {
         if (this.moveLeft && this.position.x > 0) {
             this.position.x--;
         }
@@ -65,7 +65,7 @@ export default class Player extends Living implements IPTickListener, ICollision
             this.nextFireTime--;
         }
 
-        super.pTick();
+        super.tick();
     }
 
     public onCollision(entity: Entity) {
