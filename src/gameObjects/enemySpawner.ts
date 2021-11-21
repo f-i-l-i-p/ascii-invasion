@@ -10,7 +10,6 @@ export default class EnemySpawner extends GameObject implements IPTickListener {
 
     public init() {
         this.gridWorld.addPTickListener(this);
-        console.log("init");
     }
 
     public pTick(): void {

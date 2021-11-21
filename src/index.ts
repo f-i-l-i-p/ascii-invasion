@@ -34,15 +34,15 @@ class Game {
 
 		this.gridWorld = new GridWorld(new Vector(80, 50));
 		this.gridRenderer = new GridRenderer(this.gridWorld, this.context);
-		this.gridWorld.pTick();
+		this.gridWorld.tick();
 
 		this.gridRenderer.render();
 
-		setInterval(() => this.pTick(), 30);
+		setInterval(() => this.tick(), 30);
     }
 
-	private pTick() {
-		this.gridWorld.pTick();
+	private tick() {
+		this.gridWorld.tick();
 
 		this.gridRenderer.render();
 	}

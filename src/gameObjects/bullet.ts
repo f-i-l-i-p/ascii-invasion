@@ -1,20 +1,22 @@
+import Texture from "../core/drawing/texture/texture";
 import GridWorld from "../core/gridWorld";
 import ICollisionListener from "../core/listeners/collisionListener";
 import IPTickListener from "../core/listeners/pTickListener";
 import Vector from "../core/vector";
+import createPixels from "../textures/textureMaker";
+import { bulletData } from "../textures/pixelData";
 import Entity from "./entity";
 import Player from "./player";
 import UFO from "./ufo";
+import Color from "../core/drawing/texture/color";
 
 type BulletTypes = "Enemy" | "Player";
 
 export default class Bullet extends Entity implements IPTickListener, ICollisionListener {
-    texture = [
-        ['|'],
-    ];
+    texture = new Texture(createPixels(bulletData));
 
     public static readonly DAMAGE = 1;
-    public static readonly DELAY = 4;
+    public static readonly DELAY = 1;
     public readonly type: BulletTypes;
 
     private counter = 0;
@@ -26,9 +28,14 @@ export default class Bullet extends Entity implements IPTickListener, ICollision
     }
 
     public init() {
+        super.init();
+
         this.gridWorld.addPTickListener(this);
         this.gridWorld.addCollisionListener(this);
-        super.init();
+
+        if (this.type === "Player") {
+            this.texture.setPixel(0, 0, {char: '|', color: Color.Yellow})
+        }
     }
 
     public pTick(): void {
@@ -40,19 +47,18 @@ export default class Bullet extends Entity implements IPTickListener, ICollision
             }
         }
 
-        if (this.position.y < 0 || this.position.y >= this.gridWorld.getSize().y)
-        
         this.counter++;
     }
 
     public onCollision(entity: Entity) {
         if (this.type === "Player" && entity instanceof UFO) {
             entity.damage(Bullet.DAMAGE);
+            this.destroy();
         }
         else if (this.type === "Enemy" && entity instanceof Player) {
             entity.damage(Bullet.DAMAGE);
+            this.destroy();
         }
-        this.destroy();
     }
 
     public destroy() {

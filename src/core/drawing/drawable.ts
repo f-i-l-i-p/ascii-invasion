@@ -1,7 +1,8 @@
 import Vector from "../vector";
+import Pixel from "./texture/pixel";
 
 export default interface IDrawable {
-    viewTexture(x: number, y: number): string;
+    viewPixel(x: number, y: number): Pixel;
     getPosition(): Vector;
     getSize(): Vector;
 }

@@ -1,18 +1,16 @@
+import Texture from "../core/drawing/texture/texture";
 import ICollisionListener from "../core/listeners/collisionListener";
 import IPTickListener from "../core/listeners/pTickListener";
+import Vector from "../core/vector";
+import { playerData } from "../textures/pixelData";
+import createPixels from "../textures/textureMaker";
 import Bullet from "./bullet";
 import Entity from "./entity";
 import Living from "./living";
+import UFO from "./ufo";
 
 export default class Player extends Living implements IPTickListener, ICollisionListener {
-    texture = [
-        [' ', ' ', ' ', '/', '^', '\\', ' ', ' ', ' '],
-        [' ', ' ', '/', '\'', 'o', '\'', '\\', ' ', ' '],
-        [' ', '/', '\'', ' ', '_', ' ', '\'', '\\', ' '],
-        [' ', '[', '.', '|', '_', '|', '.', ']', ' '],
-        ['/', '[', '_', '_', '_', '_', '_', ']', '\\'],
-        ['[', '/', ' ', ' ', ' ', ' ', ' ', '\\', ']'],
-    ];
+    texture = new Texture(createPixels(playerData));
 
     public readonly FIRE_DELAY = 5;
     private nextFireTime = 0;
@@ -71,8 +69,10 @@ export default class Player extends Living implements IPTickListener, ICollision
     }
 
     public onCollision(entity: Entity) {
-        this.damage(1);
-        entity.destroy();
+        if (entity instanceof UFO) {
+            entity.destroy();
+            this.damage(1);
+        }
     }
 
     public destroy() {
@@ -90,6 +90,7 @@ export default class Player extends Living implements IPTickListener, ICollision
         position.x += Math.floor(this.getSize().x / 2);
 
         const bullet = new Bullet(this.gridWorld, position, "Player");
+
         bullet.init();
         this.gridWorld.addObject(bullet);
     }

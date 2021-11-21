@@ -5,9 +5,9 @@ import Player from "../gameObjects/player";
 import UFO from "../gameObjects/ufo";
 import IPTickListener from "./listeners/pTickListener";
 import EnemySpawner from "../gameObjects/enemySpawner";
-import Box from "../gameObjects/box";
 import Entity from "../gameObjects/entity";
 import ICollisionListener from "./listeners/collisionListener";
+import Pixel, { empty } from "./drawing/texture/pixel";
 
 export default class GridWorld {
     private size: Vector;
@@ -29,36 +29,20 @@ export default class GridWorld {
         let player = new Player(this, new Vector(size.x / 2 - 3, size.y - 7));
         player.init();
         this.objects.push(player);
-        let ufo = new UFO(this, new Vector(17, 0))
-        ufo.init();
-        this.objects.push(ufo);
-
-        let box = new Box(this, new Vector(0, 0));
-        box.init();
-        this.objects.push(box);
-        box = new Box(this, new Vector(0, size.y - 3));
-        box.init();
-        this.objects.push(box);
-        box = new Box(this, new Vector(size.x - 4, 0));
-        box.init();
-        this.objects.push(box);
-        box = new Box(this, new Vector(size.x - 4, size.y - 3));
-        box.init();
-        this.objects.push(box);
     }
 
     public getSize(): Vector {
         return this.size.copy();
     }
 
-    public viewGrid(): string[][] {
-        let grid: string[][] = [];
+    public viewGrid(): Pixel[][] {
+        let grid: Pixel[][] = [];
 
         // Fill with empty spaces
         for (let y = 0; y < this.size.y; y++) {
-            let row: string[] = [];
+            let row: Pixel[] = [];
             for (let x = 0; x < this.size.x; x++) {
-                row.push(" ");
+                row.push(empty);
             }
             grid.push(row);
         }
@@ -74,11 +58,11 @@ export default class GridWorld {
                     if (position.y + y < 0 || position.y + y >= this.size.y || position.x + x < 0 || position.x + x >= this.size.x) {
                         continue;
                     }
-                    const texture = drawable.viewTexture(x, y);
-                    if (texture === ' ') {
+
+                    const texture = drawable.viewPixel(x, y);
+                    if (texture.char === ' ' || texture.char === '') {
                         continue;
                     }
-
                     grid[position.y + y][position.x + x] = texture;
                 }
             }
@@ -87,7 +71,7 @@ export default class GridWorld {
         return grid;
     }
 
-    public pTick(): void {
+    public tick(): void {
         for (let i = 0; i < this.pTickListeners.length; i++) {
             this.pTickListeners[i].pTick();
         }
@@ -103,10 +87,6 @@ export default class GridWorld {
         this.notifyCollisions();
 
         this.pTickCounter++;
-    }
-
-    public vTick(): void {
-
     }
 
     private notifyCollisions() {

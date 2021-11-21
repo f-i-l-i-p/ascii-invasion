@@ -1,11 +1,13 @@
 import IDrawable from "../core/drawing/drawable";
+import Pixel from "../core/drawing/texture/pixel";
+import Texture from "../core/drawing/texture/texture";
 import GameObject from "../core/gameObject";
 import GridWorld from "../core/gridWorld";
 import Vector from "../core/vector";
 
 export default class Entity extends GameObject implements IDrawable {
     protected position: Vector;
-    protected texture: string[][];
+    protected texture: Texture;
 
     constructor(world: GridWorld, position: Vector) {
         super(world);
@@ -26,14 +28,11 @@ export default class Entity extends GameObject implements IDrawable {
     }
 
     public getSize(): Vector {
-        if (this.texture.length == 0)
-            return new Vector(0, 0);
-        else
-            return new Vector(this.texture[0].length, this.texture.length);
+        return this.texture.getSize();
     }
 
-    public viewTexture(x: number, y: number): string {
-        return this.texture[y][x];
+    public viewPixel(x: number, y: number): Pixel {
+        return this.texture.viewPixel(x, y);
     }
 
     public destroy() {

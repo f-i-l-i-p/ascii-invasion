@@ -1,4 +1,5 @@
 import GridWorld from "../gridWorld"
+import Color from "./texture/color";
 
 export default class GridRenderer {
     private world: GridWorld;
@@ -6,6 +7,26 @@ export default class GridRenderer {
 
     protected readonly FONT: string;
     protected readonly FONT_RATIO = 1.7;
+
+    private colorTable = {
+        [Color.Black]: "#0C0C0C",
+        [Color.Blue]: "#3B78FF",
+        [Color.DarkBlue]: "#0037DA",
+        [Color.Cyan]: "#61D6D6",
+        [Color.DarkCyan]: "#3A96DD",
+        [Color.Gray]: "#CCCCCC",
+        [Color.DarkGray]: "#767676",
+        [Color.Green]: "#16C60C",
+        [Color.DarkGreen]: "#13A10E",
+        [Color.Purple]: "#B4009E",
+        [Color.DarkPurple]: "#881798",
+        [Color.Red]: "#E74856",
+        [Color.DarkRed]: "#C50F1F",
+        [Color.White]: "#F2F2F2",
+        [Color.Yellow]: "#F9F1A5",
+        [Color.DarkYellow]: "#C19C00",
+    };
+
 
     constructor(world: GridWorld, context: CanvasRenderingContext2D) {
         this.world = world;
@@ -34,13 +55,14 @@ export default class GridRenderer {
         this.context.fillStyle = "#222";
         this.context.fillRect(0, 0, this.context.canvas.width, this.context.canvas.height);
 
-        this.context.fillStyle = "#FFFFFF";
         this.context.font = "bold " + fontSize + "px Monospace";
 
         for (let y = 0; y < gridHeight; y++) {
             for (let x = 0; x < gridWidth; x++) {
-                this.context.fillText(grid[y][x], x * fontWidth, (y + fontTopOffset) * fontHeight);
+                this.context.fillStyle = this.colorTable[grid[y][x].color];
+                this.context.fillText(grid[y][x].char, x * fontWidth, (y + fontTopOffset) * fontHeight);
             }
         }
     }
 }
+
