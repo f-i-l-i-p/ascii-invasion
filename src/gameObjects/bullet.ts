@@ -3,6 +3,7 @@ import ICollisionListener from "../core/listeners/collisionListener";
 import IPTickListener from "../core/listeners/pTickListener";
 import Vector from "../core/vector";
 import Entity from "./entity";
+import Player from "./player";
 import UFO from "./ufo";
 
 type BulletTypes = "Enemy" | "Player";
@@ -12,6 +13,7 @@ export default class Bullet extends Entity implements IPTickListener, ICollision
         ['|'],
     ];
 
+    public static readonly DAMAGE = 1;
     public static readonly DELAY = 4;
     public readonly type: BulletTypes;
 
@@ -44,8 +46,11 @@ export default class Bullet extends Entity implements IPTickListener, ICollision
     }
 
     public onCollision(entity: Entity) {
-        if (entity instanceof UFO) {
-            entity.damage(1);
+        if (this.type === "Player" && entity instanceof UFO) {
+            entity.damage(Bullet.DAMAGE);
+        }
+        else if (this.type === "Enemy" && entity instanceof Player) {
+            entity.damage(Bullet.DAMAGE);
         }
         this.destroy();
     }
