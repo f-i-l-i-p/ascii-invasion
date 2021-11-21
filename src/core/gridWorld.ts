@@ -7,6 +7,7 @@ import IPTickListener from "./listeners/pTickListener";
 import EnemySpawner from "../gameObjects/enemySpawner";
 import Box from "../gameObjects/box";
 import Entity from "../gameObjects/entity";
+import ICollisionListener from "./listeners/collisionListener";
 
 export default class GridWorld {
     private size: Vector;
@@ -15,6 +16,7 @@ export default class GridWorld {
     protected objects: GameObject[] = [];
     protected drawables: IDrawable[] = [];
     protected pTickListeners: IPTickListener[] = [];
+    protected collisionListeners: ICollisionListener[] = [];
     protected falling: Entity[] = [];
 
     constructor(size: Vector) {
@@ -98,11 +100,39 @@ export default class GridWorld {
             }
         }
 
+        this.notifyCollisions();
+
         this.pTickCounter++;
     }
 
     public vTick(): void {
 
+    }
+
+    private notifyCollisions() {
+        for (let i = 0; i < this.collisionListeners.length - 1; i++) {
+            const entity1 = this.collisionListeners[i];
+            for (let j = i + 1; j < this.collisionListeners.length; j++) {
+                const entity2 = this.collisionListeners[j];
+
+                if (this.isColliding(entity1, entity2)) {
+                    entity1.onCollision(entity2);
+                    entity2.onCollision(entity1);
+                }
+            }
+        }
+    }
+
+    private isColliding(entity1: Entity, entity2: Entity): boolean {
+        const pos1 = entity1.getPosition();
+        const size1 = entity1.getSize();
+        const pos2 = entity2.getPosition();
+        const size2 = entity2.getSize();
+
+        return pos1.x + size1.x > pos2.x
+            && pos1.x < pos2.x + size2.x
+            && pos1.y + size1.y > pos2.y
+            && pos1.y < pos2.y + size2.y;
     }
 
     public addObject(object: GameObject): void {
@@ -156,6 +186,19 @@ export default class GridWorld {
         }
         else {
             console.warn("Could not remove falling", falling);
+        }
+    }
+
+    public addCollisionListener(listener: ICollisionListener): void {
+        this.collisionListeners.push(listener);
+    }
+    public removeCollisionListener(listener: ICollisionListener): void {
+        let index = this.collisionListeners.indexOf(listener);
+        if (index >= 0) {
+            this.collisionListeners.splice(index, 1);
+        }
+        else {
+            console.warn("Could not remove collision listener", listener);
         }
     }
 }

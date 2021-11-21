@@ -1,11 +1,13 @@
 import GridWorld from "../core/gridWorld";
+import ICollisionListener from "../core/listeners/collisionListener";
 import IPTickListener from "../core/listeners/pTickListener";
 import Vector from "../core/vector";
 import Entity from "./entity";
+import UFO from "./ufo";
 
 type BulletTypes = "Enemy" | "Player";
 
-export default class Bullet extends Entity implements IPTickListener {
+export default class Bullet extends Entity implements IPTickListener, ICollisionListener {
     texture = [
         ['|'],
     ];
@@ -23,9 +25,8 @@ export default class Bullet extends Entity implements IPTickListener {
 
     public init() {
         this.gridWorld.addPTickListener(this);
+        this.gridWorld.addCollisionListener(this);
         super.init();
-        console.log("AAAAAAAAA");
-        
     }
 
     public pTick(): void {
@@ -42,8 +43,16 @@ export default class Bullet extends Entity implements IPTickListener {
         this.counter++;
     }
 
+    public onCollision(entity: Entity) {
+        if (entity instanceof UFO) {
+            entity.damage(1);
+        }
+        this.destroy();
+    }
+
     public destroy() {
         this.gridWorld.removePTickListener(this);
+        this.gridWorld.removeCollisionListener(this);
         super.destroy();
     }
 }

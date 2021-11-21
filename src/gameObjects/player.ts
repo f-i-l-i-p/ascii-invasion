@@ -1,8 +1,9 @@
+import ICollisionListener from "../core/listeners/collisionListener";
 import IPTickListener from "../core/listeners/pTickListener";
 import Bullet from "./bullet";
 import Entity from "./entity";
 
-export default class Player extends Entity implements IPTickListener {
+export default class Player extends Entity implements IPTickListener, ICollisionListener {
     texture = [
         [' ', ' ', ' ', '/', '^', '\\', ' ', ' ', ' '],
         [' ', ' ', '/', '\'', 'o', '\'', '\\', ' ', ' '],
@@ -21,7 +22,7 @@ export default class Player extends Entity implements IPTickListener {
 
     public init() {
         this.gridWorld.addPTickListener(this);
-        super.init();
+        this.gridWorld.addCollisionListener(this);
 
         window.onkeydown = (event: KeyboardEvent) => {
             if (event.code == "ArrowLeft") {
@@ -46,6 +47,8 @@ export default class Player extends Entity implements IPTickListener {
                 this.fire = false;
             }
         }
+
+        super.init();
     }
 
     public pTick(): void {
@@ -65,8 +68,11 @@ export default class Player extends Entity implements IPTickListener {
         }
     }
 
+    public onCollision(entity: Entity) {}
+
     public destroy() {
         this.gridWorld.removePTickListener(this);
+        this.gridWorld.removeCollisionListener(this);
         super.destroy();
     }
 
