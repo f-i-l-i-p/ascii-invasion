@@ -7,6 +7,7 @@ import createPixels from "../textures/textureMaker";
 import Bullet from "./bullet";
 import Entity from "./entity";
 import Living from "./living";
+import RocketThrust from "./rocketThrust";
 import UFO from "./ufo";
 
 export default class Player extends Living implements TickListener, ICollisionListener {
@@ -17,10 +18,12 @@ export default class Player extends Living implements TickListener, ICollisionLi
     private fire = false;
     private moveLeft = false;
     private moveRight = false;
+    private thrust: RocketThrust;
 
 
     public init() {
         this.gridWorld.addCollisionListener(this);
+        this.createThrust();
 
         window.onkeydown = (event: KeyboardEvent) => {
             if (event.code == "ArrowLeft") {
@@ -65,6 +68,8 @@ export default class Player extends Living implements TickListener, ICollisionLi
             this.nextFireTime--;
         }
 
+        this.updateThrustPosition();
+
         super.tick();
     }
 
@@ -76,6 +81,7 @@ export default class Player extends Living implements TickListener, ICollisionLi
     }
 
     public destroy() {
+        this.thrust.destroy();
         this.gridWorld.removeCollisionListener(this);
         super.destroy();
     }
@@ -93,5 +99,22 @@ export default class Player extends Living implements TickListener, ICollisionLi
 
         bullet.init();
         this.gridWorld.addObject(bullet);
+    }
+
+    private updateThrustPosition(): void {
+        const OFFSET = 5;
+        const x = Math.floor(this.position.x + this.getSize().x / 2 - this.thrust.getSize().x / 2);
+        const y = this.position.y + OFFSET;
+
+        this.thrust.setPosition(new Vector(x, y))
+    }
+
+    private createThrust(): void {
+        this.thrust = new RocketThrust(this.gridWorld, new Vector(0, 0));
+
+        this.updateThrustPosition();
+
+        this.thrust.init();
+        this.gridWorld.addObject(this.thrust);
     }
 }

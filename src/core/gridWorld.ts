@@ -26,7 +26,7 @@ export default class GridWorld {
         spawner.init();
         this.objects.push(spawner);
 
-        let player = new Player(this, new Vector(size.x / 2 - 3, size.y - 7));
+        let player = new Player(this, new Vector(size.x / 2 - 3, size.y - 8));
         player.init();
         this.objects.push(player);
     }
