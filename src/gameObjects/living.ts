@@ -1,7 +1,7 @@
 import Color from "../core/drawing/texture/color";
 import TickListener from "../core/listeners/tickListener";
 import Entity from "./entity";
-import Explosion from "./explosion";
+import Explosion from "./particles/explosion";
 
 export default abstract class Living extends Entity implements TickListener {
     protected health = 1;

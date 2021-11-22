@@ -1,7 +1,7 @@
-import ICollisionListener from "../core/listeners/collisionListener";
-import TickListener from "../core/listeners/tickListener";
-import Entity from "./entity";
-import Living from "./living";
+import ICollisionListener from "../../core/listeners/collisionListener";
+import TickListener from "../../core/listeners/tickListener";
+import Entity from "../entity";
+import Living from "../living";
 
 export default abstract class Enemy extends Living implements TickListener, ICollisionListener {
     public init() {

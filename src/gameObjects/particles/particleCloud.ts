@@ -1,9 +1,10 @@
-import Texture from "../core/drawing/texture/texture";
-import TickListener from "../core/listeners/tickListener";
-import Entity from "./entity";
-import Vector from "../core/vector";
-import Pixel from "../core/drawing/texture/pixel";
-import Color from "../core/drawing/texture/color";
+import Color from "../../core/drawing/texture/color";
+import Pixel from "../../core/drawing/texture/pixel";
+import Texture from "../../core/drawing/texture/texture";
+import GridWorld from "../../core/gridWorld";
+import TickListener from "../../core/listeners/tickListener";
+import Vector from "../../core/vector";
+import Entity from "../entity";
 
 export default abstract class ParticleCloud extends Entity implements TickListener {
     texture = new Texture([]);
@@ -25,6 +26,11 @@ export default abstract class ParticleCloud extends Entity implements TickListen
         7: '#',
         8: 'W',
         9: '@',
+    }
+
+    constructor(world: GridWorld, position: Vector) {
+        super(world, position);
+        this.updateTexture();
     }
 
     public init() {

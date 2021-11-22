@@ -2,7 +2,7 @@ import Vector from "./vector";
 import GameObject from "./gameObject";
 import IDrawable from "./drawing/drawable";
 import Player from "../gameObjects/player";
-import UFO from "../gameObjects/ufo";
+import UFO from "../gameObjects/enemies/ufo";
 import TickListener from "./listeners/tickListener";
 import EnemySpawner from "../gameObjects/enemySpawner";
 import Entity from "../gameObjects/entity";

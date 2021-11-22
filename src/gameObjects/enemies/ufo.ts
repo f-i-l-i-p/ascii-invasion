@@ -1,8 +1,8 @@
-import Color from "../core/drawing/texture/color";
-import Texture from "../core/drawing/texture/texture";
-import createPixels from "../textures/textureMaker";
-import { ufoData } from "../textures/pixelData";
-import Bullet from "./bullet";
+import Color from "../../core/drawing/texture/color";
+import Texture from "../../core/drawing/texture/texture";
+import createPixels from "../../textures/textureMaker";
+import { ufoData } from "../../textures/pixelData";
+import Bullet from "../bullet";
 import Enemy from "./enemy";
 
 export default class UFO extends Enemy {

@@ -13,7 +13,7 @@ export default class Entity extends GameObject implements IDrawable {
         super(world);
         this.position = position;
     }
-    
+
     public init() {
         this.gridWorld.addDrawable(this);
         super.init();

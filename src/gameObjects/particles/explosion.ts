@@ -1,7 +1,7 @@
-import Vector from "../core/vector";
-import Color from "../core/drawing/texture/color";
+import Vector from "../../core/vector";
+import Color from "../../core/drawing/texture/color";
 import ParticleCloud, { Particle } from "./particleCloud";
-import GridWorld from "../core/gridWorld";
+import GridWorld from "../../core/gridWorld";
 
 export default class Explosion extends ParticleCloud {
     private readonly colors: Color [];

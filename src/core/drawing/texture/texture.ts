@@ -15,22 +15,26 @@ export default class Texture {
             return new Vector(this.pixels[0].length, this.pixels.length);
     }
 
-    public isEmpty(x: number, y:number): boolean  {
-        if (!this.inRange(x, y)) {
+    public isEmpty(x: number, y: number): boolean {
+        if (this.isOutOfRange(x, y)) {
             new RangeError();
         }
         return this.pixels[y][x].char === ' ';
     }
 
     public viewPixel(x: number, y: number): Pixel {
-        if (!this.inRange(x, y)) {
+        if (this.isOutOfRange(x, y)) {
             new RangeError();
         }
-        return this.pixels[y][x];
+        try {
+            return this.pixels[y][x];
+        } catch {
+            console.log(this, x, y);
+        }
     }
 
     public setPixel(x: number, y: number, pixel: Pixel): void {
-        if (!this.inRange(x, y)) {
+        if (this.isOutOfRange(x, y)) {
             new RangeError();
         }
         this.pixels[y][x] = pixel;
@@ -40,7 +44,7 @@ export default class Texture {
         this.pixels = pixels;
     }
 
-    private inRange(x: number, y: number): boolean {
+    private isOutOfRange(x: number, y: number): boolean {
         return y < 0 || x < 0 || y >= this.pixels.length || x >= this.pixels[0].length;
     }
 }

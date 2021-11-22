@@ -1,9 +1,9 @@
-import Texture from "../core/drawing/texture/texture";
-import createPixels from "../textures/textureMaker";
-import { rockData1, rockData2, rockData3, rockData4, rockData5 } from "../textures/pixelData";
+import Texture from "../../core/drawing/texture/texture";
+import createPixels from "../../textures/textureMaker";
+import { rockData1, rockData2, rockData3, rockData4, rockData5 } from "../../textures/pixelData";
 import Enemy from "./enemy";
-import Pixel from "../core/drawing/texture/pixel";
-import Color from "../core/drawing/texture/color";
+import Pixel from "../../core/drawing/texture/pixel";
+import Color from "../../core/drawing/texture/color";
 
 export default class Rock extends Enemy {
     texture = new Texture(createPixels(rockData1));

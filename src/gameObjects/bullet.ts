@@ -8,9 +8,9 @@ import { bulletData } from "../textures/pixelData";
 import Entity from "./entity";
 import Player from "./player";
 import Color from "../core/drawing/texture/color";
-import Explosion from "./explosion";
+import Explosion from "./particles/explosion";
 import Living from "./living";
-import Enemy from "./enemy";
+import Enemy from "./enemies/enemy";
 
 type BulletTypes = "Enemy" | "Player";
 

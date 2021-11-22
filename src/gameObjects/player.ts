@@ -6,10 +6,10 @@ import Vector from "../core/vector";
 import { playerData } from "../textures/pixelData";
 import createPixels from "../textures/textureMaker";
 import Bullet from "./bullet";
-import Enemy from "./enemy";
+import Enemy from "./enemies/enemy";
 import Entity from "./entity";
 import Living from "./living";
-import RocketThrust from "./rocketThrust";
+import RocketThrust from "./particles/rocketThrust";
 
 export default class Player extends Living implements TickListener, ICollisionListener {
     texture = new Texture(createPixels(playerData));

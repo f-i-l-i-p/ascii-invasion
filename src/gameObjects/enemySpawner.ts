@@ -1,9 +1,9 @@
 import GameObject from "../core/gameObject";
 import TickListener from "../core/listeners/tickListener";
 import Vector from "../core/vector";
-import Enemy from "./enemy";
-import Rock from "./rock";
-import UFO from "./ufo";
+import Enemy from "./enemies/enemy";
+import Rock from "./enemies/rock";
+import UFO from "./enemies/ufo";
 
 export default class EnemySpawner extends GameObject implements TickListener {
     public static readonly SPAWN_DELAY = 50;
