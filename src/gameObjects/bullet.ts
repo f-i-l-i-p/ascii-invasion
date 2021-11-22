@@ -7,9 +7,10 @@ import createPixels from "../textures/textureMaker";
 import { bulletData } from "../textures/pixelData";
 import Entity from "./entity";
 import Player from "./player";
-import UFO from "./ufo";
 import Color from "../core/drawing/texture/color";
 import Explosion from "./explosion";
+import Living from "./living";
+import Enemy from "./enemy";
 
 type BulletTypes = "Enemy" | "Player";
 
@@ -35,7 +36,7 @@ export default class Bullet extends Entity implements TickListener, ICollisionLi
         this.gridWorld.addCollisionListener(this);
 
         if (this.type === "Player") {
-            this.texture.setPixel(0, 0, {char: '|', color: Color.Yellow})
+            this.texture.setPixel(0, 0, { char: '|', color: Color.Yellow })
         }
     }
 
@@ -56,26 +57,33 @@ export default class Bullet extends Entity implements TickListener, ICollisionLi
     }
 
     public onCollision(entity: Entity) {
-        if (this.type === "Player" && entity instanceof UFO) {
-            entity.damage(Bullet.DAMAGE);
-            this.destroy();
+        if (this.type === "Player" && entity instanceof Enemy) {
+            this.onHit(entity)
         }
         else if (this.type === "Enemy" && entity instanceof Player) {
-            entity.damage(Bullet.DAMAGE);
-            this.destroy();
+            this.onHit(entity)
         }
     }
 
     public destroy() {
-        this.explode();
         this.gridWorld.removePTickListener(this);
         this.gridWorld.removeCollisionListener(this);
         super.destroy();
     }
 
-    private explode() {
-        const x = this.position.x + this.getSize().x / 2;
-        const y = this.position.y + this.getSize().y / 2;
-        Explosion.explodeAt(this.gridWorld, new Vector(x, y), [], true, 20);
+    private onHit(living: Living) {
+        living.damage(Bullet.DAMAGE);
+
+        let colors: Color[];
+
+        if (this.type === "Enemy") {
+            colors = [Color.Red, Color.DarkRed];
+        } else {
+            colors = [Color.Yellow, Color.DarkYellow];
+        }
+
+        Explosion.explodeAt(this.gridWorld, this.getCenterPosition(), colors, true, 10);
+
+        this.destroy();
     }
 }

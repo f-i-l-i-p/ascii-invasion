@@ -1,11 +1,11 @@
 import Color from "../core/drawing/texture/color";
 import TickListener from "../core/listeners/tickListener";
-import Vector from "../core/vector";
 import Entity from "./entity";
 import Explosion from "./explosion";
 
 export default abstract class Living extends Entity implements TickListener {
     protected health = 1;
+    protected mainColors: Color[];
 
     public init() {
         this.gridWorld.addPTickListener(this);
@@ -42,8 +42,6 @@ export default abstract class Living extends Entity implements TickListener {
     protected abstract onDeath(): void;
 
     protected explode(): void {
-        const x = this.position.x + this.getSize().x / 2;
-        const y = this.position.y + this.getSize().y / 2;
-        Explosion.explodeAt(this.gridWorld, new Vector(x, y), [], true, 100);
+        Explosion.explodeAt(this.gridWorld, this.getCenterPosition(), this.mainColors, true, 100);
     }
 }

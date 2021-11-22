@@ -1,6 +1,8 @@
 import GameObject from "../core/gameObject";
 import TickListener from "../core/listeners/tickListener";
 import Vector from "../core/vector";
+import Enemy from "./enemy";
+import Rock from "./rock";
 import UFO from "./ufo";
 
 export default class EnemySpawner extends GameObject implements TickListener {
@@ -22,7 +24,7 @@ export default class EnemySpawner extends GameObject implements TickListener {
     }
 
     private spawnEnemy() {
-        const enemy = new UFO(this.gridWorld, new Vector(0, 0));
+        const enemy = this.createEnemy();
         const enemySize = enemy.getSize();
 
         const x = Math.floor(Math.random() * (this.gridWorld.getSize().x - enemySize.x + 1));
@@ -33,5 +35,16 @@ export default class EnemySpawner extends GameObject implements TickListener {
         //this.instantiate(enemy)
         this.gridWorld.addObject(enemy);
         enemy.init();
+    }
+
+    private createEnemy(): Enemy {
+        const random = Math.floor(Math.random() * 2);
+
+        switch (random) {
+            case 0:
+                return new UFO(this.gridWorld, new Vector(0, 0));
+            case 1:
+                return new Rock(this.gridWorld, new Vector(0, 0));
+        }
     }
 }

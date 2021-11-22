@@ -40,3 +40,63 @@ export const playerData: PixelData = {
         "GG     GG",
     ]
 }
+
+const rockColors = [
+    "GGGGGGGGG",
+    "GGGGGGGGG",
+    "GGGGGGGGG",
+    "GGGGGGGGG",
+    "GGGGGGGGG",
+];
+
+export const rockData1: PixelData = {
+    chars: [
+        "   ____  ",
+        " _/  _ \\ ",
+        "/  /    |",
+        "| _  /  /",
+        "\\_____-/ ",
+    ],
+    colors: rockColors,
+}
+
+export const rockData2: PixelData = {
+    chars: [
+        "   ____  ",
+        " _/. _ \\ ",
+        "/  /. \\ |",
+        "|._ -/  /",
+        "\\__-__-/ ",
+    ],
+    colors: rockColors,
+}
+export const rockData3: PixelData = {
+    chars: [
+        "   ____  ",
+        " _/- _ \\ ",
+        "/ ./- \\ |",
+        "|-_.-/ ./",
+        "\\__-__-/ ",
+    ],
+    colors: rockColors,
+}
+export const rockData4: PixelData = {
+    chars: [
+        "   ____  ",
+        " _/- _.\\ ",
+        "/ -/- \\.|",
+        "|-_\\-/ -/",
+        "\\._-__-/ ",
+    ],
+    colors: rockColors,
+}
+export const rockData5: PixelData = {
+    chars: [
+        "   ____  ",
+        " _/-._-\\ ",
+        "/ -/- \\-|",
+        "|-_\\-/.-/",
+        "\\-_-__-/ ",
+    ],
+    colors: rockColors,
+}

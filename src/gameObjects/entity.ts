@@ -23,6 +23,13 @@ export default class Entity extends GameObject implements IDrawable {
         return this.position.copy();
     }
 
+    public getCenterPosition(): Vector {
+        const size = this.getSize();
+        const x = this.position.x + Math.floor(size.x / 2);
+        const y = this.position.y + Math.floor(size.y / 2);
+        return new Vector(x, y);
+    }
+
     public setPosition(position: Vector): void {
         this.position.set(position);
     }

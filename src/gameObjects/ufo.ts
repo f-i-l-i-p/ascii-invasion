@@ -1,36 +1,22 @@
 import Color from "../core/drawing/texture/color";
 import Texture from "../core/drawing/texture/texture";
-import ICollisionListener from "../core/listeners/collisionListener";
-import TickListener from "../core/listeners/tickListener";
 import createPixels from "../textures/textureMaker";
 import { ufoData } from "../textures/pixelData";
-import Entity from "./entity";
-import Living from "./living";
 import Bullet from "./bullet";
+import Enemy from "./enemy";
 
-export default class UFO extends Living implements TickListener, ICollisionListener {
+export default class UFO extends Enemy {
     texture = new Texture(createPixels(ufoData));
+    mainColors = [Color.Cyan, Color.Cyan, Color.DarkCyan, Color.DarkCyan, Color.DarkYellow];
+    health = 3;
 
-    private static readonly HEALTH = 3;
     private static readonly FIRE_DELAY = 120;
     private static readonly ANIMATION_DELAYl = 5;
     private animationCounter = 0;
     private animationDirection = 1;
     private counter = 0;
 
-    public init() {
-        this.health = UFO.HEALTH;
-
-        this.gridWorld.addFalling(this);
-        this.gridWorld.addCollisionListener(this);
-        super.init();
-    }
-
     public tick(): void {
-        if (this.position.y >= this.gridWorld.getSize().y) {
-            this.destroy();
-        }
-
         if (this.counter % UFO.FIRE_DELAY === 0) {
             this.createBullet();
         }
@@ -48,19 +34,6 @@ export default class UFO extends Living implements TickListener, ICollisionListe
         this.counter++;
 
         super.tick();
-    }
-
-    public onCollision(entity: Entity) {
-    }
-
-    public destroy() {
-        this.gridWorld.removeFalling(this);
-        this.gridWorld.removeCollisionListener(this);
-        super.destroy();
-    }
-
-    protected onDeath() {
-        this.destroy();
     }
     
     private createBullet(): void {

@@ -4,7 +4,7 @@ import ParticleCloud, { Particle } from "./particleCloud";
 import GridWorld from "../core/gridWorld";
 
 export default class Explosion extends ParticleCloud {
-    private colors = [Color.Red, Color.DarkRed, Color.Yellow, Color.DarkYellow];
+    private readonly colors: Color [];
     private readonly falling: boolean;
     private readonly particleMaxLife: number;
 
@@ -13,9 +13,9 @@ export default class Explosion extends ParticleCloud {
 
     constructor(world: GridWorld, position: Vector, colors: Color[], falling: boolean, size: number) {
         super(world, position);
-        this.colors = this.colors.concat(colors);
+        this.colors = colors;
         this.falling = falling;
-        this.particleMaxLife = size;
+        this.particleMaxLife = size * 2;
         this.particleCount = size;
     }
 
