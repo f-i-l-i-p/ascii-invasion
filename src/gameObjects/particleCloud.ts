@@ -13,7 +13,7 @@ export default abstract class ParticleCloud extends Entity implements TickListen
 
     private particles = new Array<Particle>();
 
-    private static readonly SIZE = 101;
+    private static readonly SIZE = 35;
     private static readonly DENSITY_CHAR_MAP = {
         0: ' ',
         1: '-',
