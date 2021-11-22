@@ -57,34 +57,35 @@ export default class Explosion extends Entity implements TickListener {
         9: '@',
     }
 
-    private densityToPixel(density: number): Pixel {
+    private densityToPixel(density: ParticlePixel): Pixel {
         const MAX_DENSITY = 9;
-        density = Math.min(density, MAX_DENSITY);
+        density.count = Math.min(density.count, MAX_DENSITY);
 
-        let char = this.densityCharMap[density];
+        let char = this.densityCharMap[density.count];
 
         return {
             char: char,
-            color: Color.Red,
+            color: density.color,
         }
     }
 
-    private getDensityMap(): number[][] {
-        let density: number[][] = [];
+    private getDensityMap(): ParticlePixel[][] {
+        let density: ParticlePixel[][] = [];
 
         for (let i = 0; i < Explosion.SIZE; i++) {
-            let row = []
+            let row: ParticlePixel[] = []
             for (let j = 0; j < Explosion.SIZE; j++) {
-                row.push(0);
+                row.push({count: 0, color: Color.Black});
             }
             density.push(row);
         }
 
-       this.particles.forEach(particle => {
+        this.particles.forEach(particle => {
             const x = Math.round(particle.position.x);
             const y = Math.round(particle.position.y);
             if (particle.life > 0 && x >= 0 && y >= 0 && x < Explosion.SIZE && y < Explosion.SIZE) {
-                density[y][x]++;
+                density[y][x].count++;
+                density[y][x].color = particle.color;
             }
         });
 
@@ -95,6 +96,7 @@ export default class Explosion extends Entity implements TickListener {
         let allDead = true;
         this.particles.forEach(particle => {
             particle.position.add(particle.velocity)
+            particle.velocity.multiply(particle.multiplier);
             particle.life--;
 
             if (particle.life > 0) {
@@ -114,17 +116,20 @@ export default class Explosion extends Entity implements TickListener {
     }
 
     private createParticle() {
-        const maxLife = 15;
+        const MAX_LIFE = 20;
+        const COLORS = [Color.Red, Color.DarkRed, Color.Yellow, Color.DarkYellow]
 
         this.particles.add({
             position: new Vector(Math.floor(Explosion.SIZE / 2), Math.floor(Explosion.SIZE / 2)),
             velocity: this.randomVelocity(),
-            life: Math.floor(Math.random() * maxLife)
+            multiplier: 0.7,
+            life: Math.floor(Math.random() * MAX_LIFE),
+            color: COLORS[Math.floor(Math.random() * COLORS.length)],
         });
     }
 
     private randomVelocity(): Vector {
-        const defaultVelocity = Math.random();
+        const defaultVelocity = Math.random() * 2;
         const direction = Math.random() * 2 * Math.PI;
         return new Vector(Math.cos(direction) * defaultVelocity, Math.sin(direction) * defaultVelocity)
     }
@@ -133,5 +138,12 @@ export default class Explosion extends Entity implements TickListener {
 interface Particle {
     position: Vector,
     velocity: Vector,
+    multiplier: number,
     life: number,
+    color: Color,
+}
+
+interface ParticlePixel {
+    count: number,
+    color: Color,
 }

@@ -21,6 +21,11 @@ export default class Vector {
         this.y += vector.y;
     }
 
+    public multiply(value: number): void {
+        this.x *= value;
+        this.y *= value;
+    }
+
     public copy(): Vector {
         return new Vector(this.x, this.y);
     }
