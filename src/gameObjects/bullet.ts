@@ -9,6 +9,7 @@ import Entity from "./entity";
 import Player from "./player";
 import UFO from "./ufo";
 import Color from "../core/drawing/texture/color";
+import Explosion from "./explosion";
 
 type BulletTypes = "Enemy" | "Player";
 
@@ -66,8 +67,15 @@ export default class Bullet extends Entity implements TickListener, ICollisionLi
     }
 
     public destroy() {
+        this.explode();
         this.gridWorld.removePTickListener(this);
         this.gridWorld.removeCollisionListener(this);
         super.destroy();
+    }
+
+    private explode() {
+        const x = this.position.x + this.getSize().x / 2;
+        const y = this.position.y + this.getSize().y / 2;
+        Explosion.explodeAt(this.gridWorld, new Vector(x, y), [], true, 20);
     }
 }

@@ -1,3 +1,4 @@
+import Color from "../core/drawing/texture/color";
 import TickListener from "../core/listeners/tickListener";
 import Vector from "../core/vector";
 import Entity from "./entity";
@@ -41,16 +42,8 @@ export default abstract class Living extends Entity implements TickListener {
     protected abstract onDeath(): void;
 
     protected explode(): void {
-        const exp = new Explosion(this.gridWorld, this.position);
-        const expSize = exp.getSize();
-
-        const x = this.position.x + Math.floor(this.getSize().x / 2 - expSize.x / 2);
-        const y = this.position.y + Math.floor(this.getSize().y / 2 - expSize.y / 2);
-
-        exp.setPosition(new Vector(x, y));
-
-        exp.init();
-
-        this.gridWorld.addObject(exp);
+        const x = this.position.x + this.getSize().x / 2;
+        const y = this.position.y + this.getSize().y / 2;
+        Explosion.explodeAt(this.gridWorld, new Vector(x, y), [], true, 100);
     }
 }
