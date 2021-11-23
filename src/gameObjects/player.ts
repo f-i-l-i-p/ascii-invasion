@@ -10,10 +10,13 @@ import Enemy from "./enemies/enemy";
 import Entity from "./entity";
 import Living from "./living";
 import RocketThrust from "./particles/rocketThrust";
+import GameText from "./texts.ts/gameText";
+import ScoreText from "./texts.ts/scoreText";
 
 export default class Player extends Living implements TickListener, ICollisionListener {
     texture = new Texture(createPixels(playerData));
     mainColors = [Color.Red, Color.DarkRed];
+    health = 3;
 
     public readonly FIRE_DELAY = 5;
     private nextFireTime = 0;
@@ -22,10 +25,31 @@ export default class Player extends Living implements TickListener, ICollisionLi
     private moveRight = false;
     private thrust: RocketThrust;
 
+    private score: number = 0;
+    private scoreText: ScoreText;
+
+    private healthText: GameText;
+    private ammoText: GameText;
+    private backgroundAmmoText: GameText;
+    private static readonly MAX_AMMO = 50;
+    private ammo: number = Player.MAX_AMMO;
 
     public init() {
         this.gridWorld.addCollisionListener(this);
         this.createThrust();
+
+        this.scoreText = new ScoreText(this.gridWorld);
+        this.scoreText.init();
+        const ammoPos = new Vector(this.gridWorld.getSize().x - 16, this.gridWorld.getSize().y - 2);
+        this.healthText = new GameText(this.gridWorld, new Vector(1, ammoPos.y), '', Color.Red);
+        this.ammoText = new GameText(this.gridWorld, ammoPos, '', Color.Yellow);
+        this.backgroundAmmoText = new GameText(this.gridWorld, ammoPos, "|||||||||||||||", Color.DarkGray);
+        this.backgroundAmmoText.init();
+        this.ammoText.init();
+        this.healthText.init();
+
+        this.updateHealthText();
+        this.updateAmmoText();
 
         window.onkeydown = (event: KeyboardEvent) => {
             if (event.code == "ArrowLeft") {
@@ -62,9 +86,11 @@ export default class Player extends Living implements TickListener, ICollisionLi
             this.position.x++;
         }
 
-        if (this.fire && this.nextFireTime === 0) {
+        if (this.fire && this.nextFireTime === 0 && this.ammo > 0) {
             this.createBullet();
             this.nextFireTime = this.FIRE_DELAY;
+            this.ammo--;
+            this.updateAmmoText();
         }
         if (this.nextFireTime > 0) {
             this.nextFireTime--;
@@ -72,14 +98,19 @@ export default class Player extends Living implements TickListener, ICollisionLi
 
         this.updateThrustPosition();
 
+        this.scoreText.setScore(this.score);
+        this.score++;
+
         super.tick();
     }
 
     public onCollision(entity: Entity) {
         if (entity instanceof Enemy) {
-            entity.destroy();
+            const COLLISION_DAMAGE = 10;
+            entity.damage(COLLISION_DAMAGE);
             this.damage(1);
         }
+        this.updateHealthText();
     }
 
     public destroy() {
@@ -89,6 +120,7 @@ export default class Player extends Living implements TickListener, ICollisionLi
     }
 
     protected onDeath() {
+        this.updateHealthText();
         this.destroy();
     }
 
@@ -118,5 +150,23 @@ export default class Player extends Living implements TickListener, ICollisionLi
 
         this.thrust.init();
         this.gridWorld.addObject(this.thrust);
+    }
+
+    private updateAmmoText(): void {
+        let text = '';
+        const pins = 15;
+        const toDraw = Math.max(pins * this.ammo / Player.MAX_AMMO);
+        for (let i = 0; i < toDraw; i++) {
+            text += '|';
+        }
+        this.ammoText.setText(text);
+    }
+
+    private updateHealthText(): void {
+        let text = '';
+        for (let i = 0; i < this.health; i++) {
+            text += "A ";
+        }
+        this.healthText.setText(text);
     }
 }

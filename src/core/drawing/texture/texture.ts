@@ -17,14 +17,14 @@ export default class Texture {
 
     public isEmpty(x: number, y: number): boolean {
         if (this.isOutOfRange(x, y)) {
-            new RangeError();
+            throw new RangeError();
         }
         return this.pixels[y][x].char === ' ';
     }
 
     public viewPixel(x: number, y: number): Pixel {
         if (this.isOutOfRange(x, y)) {
-            new RangeError();
+            throw new RangeError();
         }
         try {
             return this.pixels[y][x];
@@ -35,7 +35,7 @@ export default class Texture {
 
     public setPixel(x: number, y: number, pixel: Pixel): void {
         if (this.isOutOfRange(x, y)) {
-            new RangeError();
+            throw new RangeError();
         }
         this.pixels[y][x] = pixel;
     }

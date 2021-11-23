@@ -2,7 +2,6 @@ import Vector from "./vector";
 import GameObject from "./gameObject";
 import IDrawable from "./drawing/drawable";
 import Player from "../gameObjects/player";
-import UFO from "../gameObjects/enemies/ufo";
 import TickListener from "./listeners/tickListener";
 import EnemySpawner from "../gameObjects/enemySpawner";
 import Entity from "../gameObjects/entity";
@@ -63,6 +62,11 @@ export default class GridWorld {
                     if (texture.char === ' ' || texture.char === '') {
                         continue;
                     }
+
+                    if (texture.color === undefined) {
+                        throw new Error("Color is undefined")
+                    }
+
                     grid[position.y + y][position.x + x] = texture;
                 }
             }

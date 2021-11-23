@@ -59,7 +59,13 @@ export default class GridRenderer {
 
         for (let y = 0; y < gridHeight; y++) {
             for (let x = 0; x < gridWidth; x++) {
-                this.context.fillStyle = this.colorTable[grid[y][x].color];
+                if (grid[y][x].char === ' ') {
+                    continue;
+                }
+
+                const color = this.colorTable[grid[y][x].color];
+
+                this.context.fillStyle = color;
                 this.context.fillText(grid[y][x].char, x * fontWidth, (y + fontTopOffset) * fontHeight);
             }
         }
