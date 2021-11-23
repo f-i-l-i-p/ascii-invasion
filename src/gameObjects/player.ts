@@ -110,7 +110,6 @@ export default class Player extends Living implements TickListener, ICollisionLi
             entity.damage(COLLISION_DAMAGE);
             this.damage(1);
         }
-        this.updateHealthText();
     }
 
     public destroy() {
@@ -119,8 +118,11 @@ export default class Player extends Living implements TickListener, ICollisionLi
         super.destroy();
     }
 
-    protected onDeath() {
+    protected onHealthChange() {
         this.updateHealthText();
+    }
+
+    protected onDeath() {
         this.destroy();
     }
 

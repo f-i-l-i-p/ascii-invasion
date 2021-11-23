@@ -25,6 +25,7 @@ export default abstract class Living extends Entity implements TickListener {
 
     public giveHealth(amount: number): void {
         this.health += amount;
+        this.onHealthChange();
     }
 
     public damage(amount: number): void {
@@ -32,12 +33,15 @@ export default abstract class Living extends Entity implements TickListener {
         if (this.health < 0) {
             this.health = 0;
         }
+        this.onHealthChange();
     }
 
     public destroy(): void {
         this.gridWorld.removePTickListener(this);
         super.destroy();
     }
+
+    protected onHealthChange(): void { }
 
     protected abstract onDeath(): void;
 
