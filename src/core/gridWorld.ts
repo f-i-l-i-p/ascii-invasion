@@ -1,5 +1,4 @@
 import Vector from "./vector";
-import GameObject from "./gameObject";
 import IDrawable from "./drawing/drawable";
 import Player from "../gameObjects/player";
 import TickListener from "./listeners/tickListener";
@@ -12,7 +11,6 @@ export default class GridWorld {
     private size: Vector;
     private pTickCounter = 0;
 
-    protected objects: GameObject[] = [];
     protected drawables: IDrawable[] = [];
     protected pTickListeners: TickListener[] = [];
     protected collisionListeners: ICollisionListener[] = [];
@@ -23,11 +21,9 @@ export default class GridWorld {
 
         let spawner = new EnemySpawner(this);
         spawner.init();
-        this.objects.push(spawner);
 
         let player = new Player(this, new Vector(size.x / 2 - 3, size.y - 8));
         player.init();
-        this.objects.push(player);
     }
 
     public getSize(): Vector {
@@ -117,20 +113,6 @@ export default class GridWorld {
             && pos1.x < pos2.x + size2.x
             && pos1.y + size1.y > pos2.y
             && pos1.y < pos2.y + size2.y;
-    }
-
-    public addObject(object: GameObject): void {
-        this.objects.push(object);
-    }
-
-    public removeObject(object: GameObject): void {
-        let index = this.objects.indexOf(object);
-        if (index >= 0) {
-            this.objects.splice(index, 1);
-        }
-        else {
-            console.warn("Could not remove object", object);
-        }
     }
 
     public addDrawable(drawable: IDrawable): void {

@@ -44,6 +44,5 @@ export default class UFO extends Enemy {
         const bullet = new Bullet(this.gridWorld, position, "Enemy");
 
         bullet.init();
-        this.gridWorld.addObject(bullet);
     }
 }

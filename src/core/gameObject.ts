@@ -9,7 +9,5 @@ export default class GameObject {
 
     public init(): void {}
 
-    public destroy() {
-        this.gridWorld.removeObject(this);
-    }
+    public destroy(): void {}
 }

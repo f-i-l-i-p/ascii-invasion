@@ -132,7 +132,6 @@ export default class Player extends Living implements TickListener, ICollisionLi
         const bullet = new Bullet(this.gridWorld, position, "Player");
 
         bullet.init();
-        this.gridWorld.addObject(bullet);
     }
 
     private updateThrustPosition(): void {
@@ -149,7 +148,6 @@ export default class Player extends Living implements TickListener, ICollisionLi
         this.updateThrustPosition();
 
         this.thrust.init();
-        this.gridWorld.addObject(this.thrust);
     }
 
     private updateAmmoText(): void {

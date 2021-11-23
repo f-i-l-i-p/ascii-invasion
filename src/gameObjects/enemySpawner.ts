@@ -32,8 +32,6 @@ export default class EnemySpawner extends GameObject implements TickListener {
 
         enemy.setPosition(new Vector(x, y));
 
-        //this.instantiate(enemy)
-        this.gridWorld.addObject(enemy);
         enemy.init();
     }
 

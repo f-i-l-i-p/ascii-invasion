@@ -27,8 +27,6 @@ export default class Explosion extends ParticleCloud {
         const y = Math.floor(position.y - expSize.y / 2);
 
         exp.setPosition(new Vector(x, y));
-
-        world.addObject(exp);
         exp.init();
     }
 
