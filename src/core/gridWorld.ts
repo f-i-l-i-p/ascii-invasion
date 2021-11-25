@@ -113,10 +113,25 @@ export default class GridWorld {
         const pos2 = entity2.getPosition();
         const size2 = entity2.getSize();
 
-        return pos1.x + size1.x > pos2.x
-            && pos1.x < pos2.x + size2.x
-            && pos1.y + size1.y > pos2.y
-            && pos1.y < pos2.y + size2.y;
+        const startX = Math.max(pos1.x, pos2.x);
+        const endX = Math.min(pos1.x + size1.x - 1, pos2.x + size2.x - 1);
+
+        const startY = Math.max(pos1.y, pos2.y)
+        const endY = Math.min(pos1.y + size1.y - 1, pos2.y + size2.y - 1);
+
+        if (endX - startX < 0 || endY - startY < 0) {
+            return false;
+        }
+
+        // Check each pixel
+        for (let x = startX; x <= endX; x++) {
+            for (let y = startY; y <= endY; y++) {
+                if (entity1.viewPixel(x - pos1.x, y - pos1.y).char !== ' ' && entity2.viewPixel(x - pos2.x, y - pos2.y).char !== ' ') {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public addDrawable(drawable: IDrawable): void {
