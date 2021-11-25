@@ -23,6 +23,10 @@ export default class Entity extends GameObject implements IDrawable {
         return this.position.copy();
     }
 
+    public setPosition(position: Vector): void {
+        this.position.set(position);
+    }
+
     public getCenterPosition(): Vector {
         const size = this.getSize();
         const x = this.position.x + Math.floor(size.x / 2);
@@ -30,8 +34,10 @@ export default class Entity extends GameObject implements IDrawable {
         return new Vector(x, y);
     }
 
-    public setPosition(position: Vector): void {
-        this.position.set(position);
+    public centerAt(position: Vector) {
+        const size = this.getSize();
+        this.position.x = position.x - Math.floor(size.x / 2);
+        this.position.y = position.y - Math.floor(size.y / 2);
     }
 
     public getSize(): Vector {

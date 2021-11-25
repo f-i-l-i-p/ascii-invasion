@@ -4,6 +4,8 @@ import Entity from "../entity";
 import Living from "../living";
 
 export default abstract class Enemy extends Living implements TickListener, ICollisionListener {
+    private static readonly DROP_PROBABILITY = 0.2;
+
     public init() {
         this.gridWorld.addFalling(this);
         this.gridWorld.addCollisionListener(this);

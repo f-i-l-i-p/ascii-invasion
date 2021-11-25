@@ -31,7 +31,7 @@ export default class Player extends Living implements TickListener, ICollisionLi
     private healthText: GameText;
     private ammoText: GameText;
     private backgroundAmmoText: GameText;
-    private static readonly MAX_AMMO = 50;
+    private static readonly MAX_AMMO = 100;
     private ammo: number = Player.MAX_AMMO;
 
     public init() {
@@ -76,6 +76,11 @@ export default class Player extends Living implements TickListener, ICollisionLi
         }
 
         super.init();
+    }
+
+    public giveAmmo(amount: number): void {
+        this.ammo = Math.min(this.ammo + amount, Player.MAX_AMMO);
+        this.updateAmmoText();
     }
 
     public tick(): void {

@@ -100,3 +100,37 @@ export const rockData5: PixelData = {
     ],
     colors: rockColors,
 }
+
+export const healthPickupData: PixelData = {
+    chars: [
+        "+--+",
+        "|+A|",
+        "+--+",
+    ], colors: [
+        "YYYY",
+        "YrrY",
+        "YYYY",
+    ],
+}
+export const ammoPickupData: PixelData = {
+    chars: [
+        "+--+",
+        "|+||",
+        "+--+",
+    ], colors: [
+        "YYYY",
+        "YyyY",
+        "YYYY",
+    ],
+}
+export const doubleFirePickupData: PixelData = {
+    chars: [
+        "+--+",
+        "||||",
+        "+--+",
+    ], colors: [
+        "YYYY",
+        "YggY",
+        "YYYY",
+    ],
+}

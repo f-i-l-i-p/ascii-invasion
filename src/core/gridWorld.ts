@@ -6,6 +6,7 @@ import EnemySpawner from "../gameObjects/enemySpawner";
 import Entity from "../gameObjects/entity";
 import ICollisionListener from "./listeners/collisionListener";
 import Pixel, { empty } from "./drawing/texture/pixel";
+import PickupSpawner from "../gameObjects/pickupSpawner";
 
 export default class GridWorld {
     private size: Vector;
@@ -19,8 +20,11 @@ export default class GridWorld {
     constructor(size: Vector) {
         this.size = size;
 
-        let spawner = new EnemySpawner(this);
-        spawner.init();
+        let enemySpawner = new EnemySpawner(this);
+        enemySpawner.init();
+
+        let pickupSpawner = new PickupSpawner(this);
+        pickupSpawner.init();
 
         let player = new Player(this, new Vector(size.x / 2 - 3, size.y - 8));
         player.init();
