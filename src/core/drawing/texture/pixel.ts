@@ -5,4 +5,4 @@ export default interface Pixel {
     color: Color,
 }
 
-export const empty: Pixel = { char: '', color: Color.Black }
+export const empty: Pixel = { char: ' ', color: Color.Black }

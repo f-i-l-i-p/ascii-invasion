@@ -80,7 +80,7 @@ export default class GridWorld {
             this.pTickListeners[i].tick();
         }
 
-        if (this.pTickCounter % 10 == 0) {
+        if (this.pTickCounter % 6 == 0) {
             for (let i = 0; i < this.falling.length; i++) {
                 let pos = this.falling[i].getPosition();
                 pos.y++;

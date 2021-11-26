@@ -42,33 +42,35 @@ export default class GridRenderer {
         const gridWidth = grid[0].length;
         const gridHeight = grid.length;
 
-        const maxFontWidth = this.context.canvas.width / gridWidth;
-        const maxFontHeight = this.context.canvas.height / gridHeight;
-
-        const fontSize = Math.min(maxFontWidth * this.FONT_RATIO, maxFontHeight);
-        const fontWidth = fontSize / this.FONT_RATIO;
-        const fontHeight = fontSize;
-
-        const fontTopOffset = 0.75;
-
-        // Fill background
-        this.context.fillStyle = "#222";
-        this.context.fillRect(0, 0, this.context.canvas.width, this.context.canvas.height);
-
-        this.context.font = "bold " + fontSize + "px Monospace";
+        let currentColor: Color = Color.Black;
+        let content: string = "";
 
         for (let y = 0; y < gridHeight; y++) {
+
+            content += '<pre style="color: ' + this.colorTable[currentColor] + '; display: inline">';
+
             for (let x = 0; x < gridWidth; x++) {
-                if (grid[y][x].char === ' ') {
-                    continue;
+                const color = grid[y][x].color;
+                const char = grid[y][x].char;
+
+                if (color === currentColor || char === ' ') {
+                    content += char;
+                } else {
+                    content += "</pre>";
+
+                    currentColor = color;
+                    content += '<pre style="color: ' + this.colorTable[grid[y][x].color] + '; display: inline">';
+
+                    content += char;
                 }
-
-                const color = this.colorTable[grid[y][x].color];
-
-                this.context.fillStyle = color;
-                this.context.fillText(grid[y][x].char, x * fontWidth, (y + fontTopOffset) * fontHeight);
             }
+
+            content += "</pre>\n";
         }
+
+        document.getElementById("content").innerHTML = "<pre>" + content + "</pre>";
     }
 }
+
+
 
