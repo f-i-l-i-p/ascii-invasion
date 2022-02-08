@@ -18,7 +18,7 @@ export default class Player extends Living implements TickListener, ICollisionLi
     mainColors = [Color.Red, Color.DarkRed];
     health = 3;
 
-    public readonly FIRE_DELAY = 5;
+    public readonly FIRE_DELAY = 4;
     private nextFireTime = 0;
     private fire = false;
     private moveLeft = false;
