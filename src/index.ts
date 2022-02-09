@@ -49,7 +49,7 @@ class Game {
 }
 
 function startGame() {
-	let game = new Game(800, 500);
+	let game = new Game(825, 880);
 	game.init();
 }
 window.onload = startGame;
