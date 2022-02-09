@@ -5,7 +5,7 @@ export default class GridRenderer {
     private world: GridWorld;
     private context: CanvasRenderingContext2D;
 
-    protected readonly FONT: string;
+    protected readonly FONT = "Ubuntu Mono";
     protected readonly FONT_RATIO = 1.7;
 
     private colorTable = {
@@ -55,7 +55,7 @@ export default class GridRenderer {
         this.context.fillStyle = "#222";
         this.context.fillRect(0, 0, this.context.canvas.width, this.context.canvas.height);
 
-        this.context.font = "bold " + fontSize + "px Monospace";
+        this.context.font = `${fontSize}px ${this.FONT}`;
 
         for (let y = 0; y < gridHeight; y++) {
             for (let x = 0; x < gridWidth; x++) {
