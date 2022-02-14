@@ -1,5 +1,10 @@
 # ascii-invasion
 
-npm install
+https://f-i-l-i-p.github.io/ascii-invasion/
 
+
+##### Build
+```
+npm install
 npx webpack
+```
