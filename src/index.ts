@@ -2,26 +2,15 @@ import GridWorld from "./core/gridWorld"
 import GridRenderer from "./core/drawing/gridRenderer"
 import Vector from "./core/vector"
 
+/**
+ * Main class that initializes the game and runs the game loop.
+ */
 class Game {
-	public readonly width: number;
-	public readonly height: number;
-
-	protected context: CanvasRenderingContext2D
-
-	protected gridRenderer: GridRenderer;
-	protected gridWorld: GridWorld;
-
-	constructor(width: number, height: number) {
-		this.width = width;
-		this.height = height;
-	}
+    protected gridWorld: GridWorld
+    protected gridRenderer: GridRenderer
 
     public init() {
         let canvas: HTMLCanvasElement = document.createElement("canvas")
-        canvas.width = this.width * 2;
-        canvas.height = this.height * 2;
-		canvas.style.width = this.width + "px";
-		canvas.style.height = this.height + "px";
         document.body.insertBefore(canvas, document.body.childNodes[0])
 
         let context = canvas.getContext("2d")
@@ -29,28 +18,21 @@ class Game {
             throw new Error
         }
 
-        this.context = context
+		const WORLD_SIZE = new Vector(80, 50)
 
+        this.gridWorld = new GridWorld(WORLD_SIZE)
+        this.gridRenderer = new GridRenderer(this.gridWorld, context)
 
-		this.gridWorld = new GridWorld(new Vector(80, 50));
-		this.gridRenderer = new GridRenderer(this.gridWorld, this.context);
-		this.gridWorld.tick();
-
-		this.gridRenderer.render();
-
-		setInterval(() => this.tick(), 30);
+        setInterval(() => this.tick(), 30)
     }
 
-	private tick() {
-		this.gridWorld.tick();
-
-		this.gridRenderer.render();
-	}
+    private tick() {
+        this.gridWorld.tick()
+        this.gridRenderer.render()
+    }
 }
 
-function startGame() {
-	let game = new Game(825, 880);
-	game.init();
+window.onload = () => {
+    let game = new Game()
+    game.init()
 }
-window.onload = startGame;
-
