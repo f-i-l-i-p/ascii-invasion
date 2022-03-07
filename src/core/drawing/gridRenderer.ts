@@ -5,7 +5,7 @@ export default class GridRenderer {
     private world: GridWorld
     private context: CanvasRenderingContext2D
 
-    private readonly FONT = "Ubuntu Mono"
+    private readonly FONT = "ascii-invasion-font"
     /** How tall the font is relative to its width. */
     private readonly FONT_RATIO = 1.9
 
