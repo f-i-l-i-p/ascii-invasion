@@ -10,11 +10,11 @@ export default class UFO extends Enemy {
     mainColors = [Color.Cyan, Color.Cyan, Color.DarkCyan, Color.DarkCyan, Color.DarkYellow];
     health = 3;
 
-    private static readonly FIRE_DELAY = 120;
+    private static readonly FIRE_DELAY = 110;
     private static readonly ANIMATION_DELAYl = 5;
     private animationCounter = 0;
     private animationDirection = 1;
-    private counter = 0;
+    private counter = UFO.ANIMATION_DELAYl - 40;
 
     public tick(): void {
         if (this.counter % UFO.FIRE_DELAY === 0) {

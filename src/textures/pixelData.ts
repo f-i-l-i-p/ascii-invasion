@@ -15,7 +15,7 @@ export const ufoData: PixelData = {
 
 export const bulletData: PixelData = {
     chars: [
-        "|",
+        "I",
     ],
     colors: [
         "r",
@@ -104,7 +104,7 @@ export const rockData5: PixelData = {
 export const healthPickupData: PixelData = {
     chars: [
         "+--+",
-        "|+A|",
+        "|+H|",
         "+--+",
     ], colors: [
         "YYYY",
@@ -115,7 +115,7 @@ export const healthPickupData: PixelData = {
 export const ammoPickupData: PixelData = {
     chars: [
         "+--+",
-        "|+||",
+        "|+A|",
         "+--+",
     ], colors: [
         "YYYY",

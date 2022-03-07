@@ -36,7 +36,7 @@ export default class Bullet extends Entity implements TickListener, ICollisionLi
         this.gridWorld.addCollisionListener(this);
 
         if (this.type === "Player") {
-            this.texture.setPixel(0, 0, { char: '|', color: Color.Yellow })
+            this.texture.setPixel(0, 0, { char: 'I', color: Color.Yellow })
         }
     }
 

@@ -30,9 +30,7 @@ export default class Player extends Living implements TickListener, ICollisionLi
 
     private healthText: GameText;
     private ammoText: GameText;
-    private backgroundAmmoText: GameText;
-    private static readonly MAX_AMMO = 100;
-    private ammo: number = Player.MAX_AMMO;
+    private ammo: number = 100;
 
     public init() {
         this.gridWorld.addCollisionListener(this);
@@ -40,11 +38,9 @@ export default class Player extends Living implements TickListener, ICollisionLi
 
         this.scoreText = new ScoreText(this.gridWorld);
         this.scoreText.init();
-        const ammoPos = new Vector(this.gridWorld.getSize().x - 16, this.gridWorld.getSize().y - 2);
-        this.healthText = new GameText(this.gridWorld, new Vector(1, ammoPos.y), '', Color.Red);
-        this.ammoText = new GameText(this.gridWorld, ammoPos, '', Color.Yellow);
-        this.backgroundAmmoText = new GameText(this.gridWorld, ammoPos, "|||||||||||||||", Color.DarkGray);
-        this.backgroundAmmoText.init();
+        const ammoPosX = this.gridWorld.getSize().x - 10;
+        this.healthText = new GameText(this.gridWorld, new Vector(ammoPosX, 0), '', Color.Red);
+        this.ammoText = new GameText(this.gridWorld, new Vector(ammoPosX, 1), '', Color.Yellow);
         this.ammoText.init();
         this.healthText.init();
 
@@ -79,7 +75,7 @@ export default class Player extends Living implements TickListener, ICollisionLi
     }
 
     public giveAmmo(amount: number): void {
-        this.ammo = Math.min(this.ammo + amount, Player.MAX_AMMO);
+        this.ammo += amount;
         this.updateAmmoText();
     }
 
@@ -158,20 +154,10 @@ export default class Player extends Living implements TickListener, ICollisionLi
     }
 
     private updateAmmoText(): void {
-        let text = '';
-        const pins = 15;
-        const toDraw = Math.max(pins * this.ammo / Player.MAX_AMMO);
-        for (let i = 0; i < toDraw; i++) {
-            text += '|';
-        }
-        this.ammoText.setText(text);
+        this.ammoText.setText("Ammo: " + this.ammo);
     }
 
     private updateHealthText(): void {
-        let text = '';
-        for (let i = 0; i < this.health; i++) {
-            text += "A ";
-        }
-        this.healthText.setText(text);
+        this.healthText.setText("Health: " + this.health);
     }
 }

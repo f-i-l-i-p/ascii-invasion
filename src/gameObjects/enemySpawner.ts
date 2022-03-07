@@ -6,6 +6,11 @@ import Rock from "./enemies/rock";
 import UFO from "./enemies/ufo";
 
 export default class EnemySpawner extends GameObject implements TickListener {
+    private readonly START_DELAY = 30;
+    private readonly LINEAR_DELAY_DECREASE = 0.0005;
+
+    private readonly GET_ROCK_PROB = (tick: number) => { return 1 }
+    private readonly GET_UFO_PROB = (tick: number) => { return Math.max(0, Math.log10(tick * 0.03 - 5) * 0.5 || 0) }
 
     private tickCounter = 0;
     private nextSpawn = 0;
@@ -15,7 +20,7 @@ export default class EnemySpawner extends GameObject implements TickListener {
 
     public init() {
         this.gridWorld.addPTickListener(this);
-        for (let i = 0; i< this.gridWorld.getSize().x; i++) {
+        for (let i = 0; i < this.gridWorld.getSize().x; i++) {
             this.spawnPositions.push(true);
         }
 
@@ -47,21 +52,23 @@ export default class EnemySpawner extends GameObject implements TickListener {
     }
 
     private createEnemy(): Enemy {
-        const random = Math.floor(Math.random() * 2);
+        const rockProb = this.GET_ROCK_PROB(this.tickCounter);
+        const ufoProb = this.GET_UFO_PROB(this.tickCounter);
 
-        switch (random) {
-            case 0:
-                return new UFO(this.gridWorld, new Vector(0, 0));
-            case 1:
-                return new Rock(this.gridWorld, new Vector(0, 0));
+        console.log(ufoProb)
+
+        const random = Math.random() * (rockProb + ufoProb)
+
+        if (random < rockProb) {
+            return new Rock(this.gridWorld, new Vector(0, 0));
+        }
+        else if (random < rockProb + ufoProb) {
+            return new UFO(this.gridWorld, new Vector(0, 0));
         }
     }
 
     private updateNextSpawn(): void {
-        const START_DELAY = 50;
-        const LINEAR_DECREASE = 0.002;
-
-        this.nextSpawn = this.tickCounter + START_DELAY - this.tickCounter * LINEAR_DECREASE;
+        this.nextSpawn = this.tickCounter + this.START_DELAY - this.tickCounter * this.LINEAR_DELAY_DECREASE;
     }
 
     private updateSpawnPositions(latestSpawnCenter: number) {
