@@ -50,7 +50,7 @@ export default class Bullet extends Entity implements TickListener, ICollisionLi
         }
 
         if (this.position.y < 0 || this.position.y >= this.gridWorld.getSize().y) {
-            this.destroy();
+            this.scene.removeObject(this)
         }
 
         this.counter++;
@@ -63,12 +63,6 @@ export default class Bullet extends Entity implements TickListener, ICollisionLi
         else if (this.type === "Enemy" && entity instanceof Player) {
             this.onHit(entity)
         }
-    }
-
-    public destroy() {
-        this.gridWorld.removePTickListener(this);
-        this.gridWorld.removeCollisionListener(this);
-        super.destroy();
     }
 
     private onHit(living: Living) {
@@ -84,6 +78,6 @@ export default class Bullet extends Entity implements TickListener, ICollisionLi
 
         Explosion.explodeAt(this.gridWorld, this.getCenterPosition(), colors, true, 10);
 
-        this.destroy();
+        this.scene.removeObject(this)
     }
 }

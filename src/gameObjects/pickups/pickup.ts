@@ -24,25 +24,18 @@ export default abstract class Pickup extends Entity implements TickListener, Col
         this.updateAnimation();
 
         if (this.position.y >= this.gridWorld.getSize().y) {
-            this.destroy();
+            this.scene.removeObject(this)
         }
     }
 
     public onCollision(entity: Entity) {
         if (entity instanceof Player) {
             this.onPlayerCollision(entity);
-            this.destroy();
+            this.scene.removeObject(this)
         }
     }
 
     protected abstract onPlayerCollision(player: Player);
-
-    public destroy(): void {
-        this.gridWorld.removeFalling(this);
-        this.gridWorld.removePTickListener(this);
-        this.gridWorld.removeCollisionListener(this);
-        super.destroy();
-    }
 
     private updateAnimation() {
         const size = this.getSize();

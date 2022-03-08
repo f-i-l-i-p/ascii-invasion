@@ -113,18 +113,12 @@ export default class Player extends Living implements TickListener, ICollisionLi
         }
     }
 
-    public destroy() {
-        this.thrust.destroy();
-        this.gridWorld.removeCollisionListener(this);
-        super.destroy();
-    }
-
     protected onHealthChange() {
         this.updateHealthText();
     }
 
     protected onDeath() {
-        this.destroy();
+        this.scene.removeObject(this)
     }
 
     private createBullet(): void {

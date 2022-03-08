@@ -1,13 +1,14 @@
-import GridWorld from "./core/gridWorld"
-import GridRenderer from "./core/drawing/gridRenderer"
+import TestObject from "./newGameObjects/testObject"
+import SceneRenderer from "./core/drawing/sceneRenderer"
 import Vector from "./core/vector"
+import Scene from "./engine/scene"
 
 /**
  * Main class that initializes the game and runs the game loop.
  */
 class Game {
-    protected gridWorld: GridWorld
-    protected gridRenderer: GridRenderer
+    protected scene: Scene
+    protected gridRenderer: SceneRenderer
 
     public init() {
         let canvas: HTMLCanvasElement = document.createElement("canvas")
@@ -18,16 +19,18 @@ class Game {
             throw new Error
         }
 
-		const WORLD_SIZE = new Vector(80, 50)
+		const SCENE_SIZE = new Vector(80, 50)
 
-        this.gridWorld = new GridWorld(WORLD_SIZE)
-        this.gridRenderer = new GridRenderer(this.gridWorld, context)
+        this.scene = new Scene(SCENE_SIZE)
+        this.scene.addObject(new TestObject())
+
+        this.gridRenderer = new SceneRenderer(this.scene, context)
 
         setInterval(() => this.tick(), 30)
     }
 
     private tick() {
-        this.gridWorld.tick()
+        this.scene.tick()
         this.gridRenderer.render()
     }
 }

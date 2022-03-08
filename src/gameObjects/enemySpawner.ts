@@ -1,6 +1,6 @@
-import GameObject from "../core/gameObject";
 import TickListener from "../core/listeners/tickListener";
 import Vector from "../core/vector";
+import GameObject from "../engine/gameObject";
 import Enemy from "./enemies/enemy";
 import Rock from "./enemies/rock";
 import UFO from "./enemies/ufo";

@@ -1,6 +1,6 @@
-import GameObject from "../core/gameObject";
 import TickListener from "../core/listeners/tickListener";
 import Vector from "../core/vector";
+import GameObject from "../engine/gameObject";
 import AmmoPickup from "./pickups/ammoPickup";
 import HealthPickup from "./pickups/healthPickup";
 import Pickup from "./pickups/pickup";

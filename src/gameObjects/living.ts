@@ -36,11 +36,6 @@ export default abstract class Living extends Entity implements TickListener {
         this.onHealthChange();
     }
 
-    public destroy(): void {
-        this.gridWorld.removePTickListener(this);
-        super.destroy();
-    }
-
     protected onHealthChange(): void { }
 
     protected abstract onDeath(): void;

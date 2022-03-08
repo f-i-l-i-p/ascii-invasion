@@ -5,7 +5,7 @@ import TickListener from "./listeners/tickListener";
 import EnemySpawner from "../gameObjects/enemySpawner";
 import Entity from "../gameObjects/entity";
 import ICollisionListener from "./listeners/collisionListener";
-import Pixel, { empty } from "./drawing/texture/pixel";
+import Pixel, { emptyPixel } from "./drawing/texture/pixel";
 import PickupSpawner from "../gameObjects/pickupSpawner";
 
 export default class GridWorld {
@@ -22,6 +22,7 @@ export default class GridWorld {
     constructor(size: Vector) {
         this.size = size;
 
+        /*
         let enemySpawner = new EnemySpawner(this);
         enemySpawner.init();
 
@@ -30,6 +31,7 @@ export default class GridWorld {
 
         let player = new Player(this, new Vector(size.x / 2 - 3, size.y - 8));
         player.init();
+        */
     }
 
     public getSize(): Vector {
@@ -43,7 +45,7 @@ export default class GridWorld {
         for (let y = 0; y < this.size.y; y++) {
             let row: Pixel[] = [];
             for (let x = 0; x < this.size.x; x++) {
-                row.push(empty);
+                row.push(emptyPixel);
             }
             grid.push(row);
         }

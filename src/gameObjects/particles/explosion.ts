@@ -53,11 +53,4 @@ export default class Explosion extends ParticleCloud {
         const direction = Math.random() * 2 * Math.PI;
         return new Vector(Math.cos(direction) * defaultVelocity, Math.sin(direction) * defaultVelocity / FONT_RATIO )
     }
-
-    public destroy() {
-        if (this.falling) {
-            this.gridWorld.removeFalling(this);
-        }
-        super.destroy();
-    }
 }

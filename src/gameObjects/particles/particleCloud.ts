@@ -48,11 +48,6 @@ export default abstract class ParticleCloud extends Entity implements TickListen
         this.updateTexture();
     }
 
-    public destroy() {
-        this.gridWorld.removePTickListener(this);
-        super.destroy();
-    }
-
     private updateTexture() {
         const density = this.getDensityMap();
 
@@ -118,7 +113,7 @@ export default abstract class ParticleCloud extends Entity implements TickListen
         }
 
         if (allDead && !this.repeat) {
-            this.destroy();
+            this.scene.removeObject(this)
         }
     }
 

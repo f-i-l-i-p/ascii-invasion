@@ -4,7 +4,6 @@ import Entity from "../entity";
 import Living from "../living";
 
 export default abstract class Enemy extends Living implements TickListener, ICollisionListener {
-    private static readonly DROP_PROBABILITY = 0.2;
 
     public init() {
         this.gridWorld.addFalling(this);
@@ -14,7 +13,7 @@ export default abstract class Enemy extends Living implements TickListener, ICol
 
     public tick(): void {
         if (this.position.y >= this.gridWorld.getSize().y) {
-            this.destroy();
+            this.scene.removeObject(this)
         }
 
         super.tick();
@@ -22,13 +21,7 @@ export default abstract class Enemy extends Living implements TickListener, ICol
 
     public onCollision(entity: Entity) { }
 
-    public destroy() {
-        this.gridWorld.removeFalling(this);
-        this.gridWorld.removeCollisionListener(this);
-        super.destroy();
-    }
-
     protected onDeath() {
-        this.destroy();
+        this.scene.removeObject(this)
     }
 }
