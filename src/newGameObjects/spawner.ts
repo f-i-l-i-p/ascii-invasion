@@ -1,11 +1,10 @@
-import TickListener from "../core/listeners/tickListener";
+import Position from "../components/position";
+import Texture from "../components/texture";
 import Vector from "../core/vector";
 import GameObject from "../engine/gameObject";
-import Enemy from "./enemies/enemy";
-import Rock from "./enemies/rock";
-import UFO from "./enemies/ufo";
+import Rock from "./rock";
 
-export default class EnemySpawner extends GameObject implements TickListener {
+export default class Spawner extends GameObject {
     private readonly START_DELAY = 30;
     private readonly LINEAR_DELAY_DECREASE = 0.0005;
 
@@ -19,12 +18,11 @@ export default class EnemySpawner extends GameObject implements TickListener {
     private spawnSpacing: number;
 
     public init() {
-        this.gridWorld.addPTickListener(this);
-        for (let i = 0; i < this.gridWorld.getSize().x; i++) {
+        for (let i = 0; i < this.scene.getSize().x; i++) {
             this.spawnPositions.push(true);
         }
 
-        this.spawnSpacing = this.gridWorld.getSize().x / 5;
+        this.spawnSpacing = this.scene.getSize().x / 5;
     }
 
     public tick(): void {
@@ -38,7 +36,9 @@ export default class EnemySpawner extends GameObject implements TickListener {
 
     private spawnEnemy() {
         const enemy = this.createEnemy();
-        const enemySize = enemy.getSize();
+        this.scene.addObject(enemy)
+
+        const enemySize = enemy.getComponent(Texture).getSize()
 
         const positions = this.getPossibleSpawnPositions(enemySize.x);
 
@@ -47,21 +47,20 @@ export default class EnemySpawner extends GameObject implements TickListener {
 
         this.updateSpawnPositions(x + Math.floor(enemySize.x / 2));
 
-        enemy.setPosition(new Vector(x, y));
-        enemy.init();
+        enemy.getComponent(Position).set(new Vector(x, y));
     }
 
-    private createEnemy(): Enemy {
+    private createEnemy(): GameObject {
         const rockProb = this.GET_ROCK_PROB(this.tickCounter);
-        const ufoProb = this.GET_UFO_PROB(this.tickCounter);
+        const ufoProb = 0 // this.GET_UFO_PROB(this.tickCounter);
 
         const random = Math.random() * (rockProb + ufoProb)
 
         if (random < rockProb) {
-            return new Rock(this.gridWorld, new Vector(0, 0));
+            return new Rock();
         }
         else if (random < rockProb + ufoProb) {
-            return new UFO(this.gridWorld, new Vector(0, 0));
+            //return new UFO(this.gridWorld, new Vector(0, 0));
         }
     }
 

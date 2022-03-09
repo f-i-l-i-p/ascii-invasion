@@ -33,11 +33,7 @@ export default class Texture extends Component {
         if (this.isOutOfRange(x, y)) {
             throw new RangeError();
         }
-        try {
-            return this.pixels[y][x];
-        } catch {
-            console.log(this, x, y);
-        }
+        return this.pixels[y][x];
     }
 
     public setPixel(x: number, y: number, pixel: Pixel): void {

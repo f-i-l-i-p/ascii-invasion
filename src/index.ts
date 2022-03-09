@@ -1,7 +1,7 @@
-import TestObject from "./newGameObjects/testObject"
 import SceneRenderer from "./core/drawing/sceneRenderer"
 import Vector from "./core/vector"
 import Scene from "./engine/scene"
+import Spawner from "./newGameObjects/spawner"
 
 /**
  * Main class that initializes the game and runs the game loop.
@@ -22,7 +22,7 @@ class Game {
 		const SCENE_SIZE = new Vector(80, 50)
 
         this.scene = new Scene(SCENE_SIZE)
-        this.scene.addObject(new TestObject())
+        this.scene.addObject(new Spawner())
 
         this.gridRenderer = new SceneRenderer(this.scene, context)
 

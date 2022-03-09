@@ -56,7 +56,6 @@ export default class Collider extends Component {
     }
 
     private notifyListeners(go: GameObject) {
-        console.log("notify")
         for (let i = 0; i < this.listeners.length; i++) {
             this.listeners[i](go)
         }

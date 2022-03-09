@@ -26,11 +26,6 @@ export default class ComponentManger {
             this.componentMap.set(c.tag, [c])
         }
 
-        console.log("keys:")
-        this.componentMap.forEach((a, b) => {
-            console.log(b, a.length)
-        })
-
         // Add to game object map
         components = this.gameObjectMap.get(go)
         if (components !== undefined) {
@@ -87,7 +82,19 @@ export default class ComponentManger {
     }
 
     public onObjectRemoved(go: GameObject): void {
-        // TODO: Remove components
+        let toRemove = this.getGoComponents(go)
+
+        if (toRemove === undefined) {
+            return
+        }
+
+        for (let i = 0; i < toRemove.length; i++) {
+            let c = toRemove[i]
+            let components = this.componentMap.get(c.tag)
+            let index = components.indexOf(c)
+            components.splice(index, 1)
+        }
+        this.gameObjectMap.delete(go)
     }
 
     private getTag<T extends Component>(c: cType<T>): string {
