@@ -15,8 +15,6 @@ export default abstract class Enemy extends Living implements TickListener, ICol
         if (this.position.y >= this.gridWorld.getSize().y) {
             this.scene.removeObject(this)
         }
-
-        super.tick();
     }
 
     public onCollision(entity: Entity) { }

@@ -5,8 +5,9 @@ import GameObject from "./gameObject";
 export default class Scene {
     private frameCounter = 0
     private gameObjects: GameObject[] = []
+    private toRemove: GameObject[] = []
     private size: Vector
-    
+
     public componentManager = new ComponentManger()
 
     constructor(size: Vector) {
@@ -42,20 +43,27 @@ export default class Scene {
      * Removes a game object from the scene.
      */
     public removeObject(go: GameObject) {
-        const index = this.gameObjects.indexOf(go)
-
-        if (index === -1) {
-            throw new Error("Object does not exist in scene")
-        }
-
-        this.gameObjects.splice(index, 1)
-        this.componentManager.onObjectRemoved(go)
+        this.toRemove.push(go)
     }
 
     public tick() {
+        // Tick objects
         for (let go of this.gameObjects) {
-            go.tick(this.frameCounter)
+            go.tickGameObject(this.frameCounter)
         }
+
+        // Remove objects
+        for (let go of this.toRemove) {
+            const index = this.gameObjects.indexOf(go)
+
+            if (index === -1) {
+                throw new Error("Can't remove object that does not exist in the scene.")
+            }
+
+            this.gameObjects.splice(index, 1)
+            this.componentManager.onObjectRemoved(go)
+        }
+        this.toRemove = []
 
         this.frameCounter++;
     }

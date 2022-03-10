@@ -11,7 +11,6 @@ export default class Spawner extends GameObject {
     private readonly GET_ROCK_PROB = (tick: number) => { return 1 }
     private readonly GET_UFO_PROB = (tick: number) => { return Math.max(0, Math.log10(tick * 0.03 - 5) * 0.5 || 0) }
 
-    private tickCounter = 0;
     private nextSpawn = 0;
 
     private spawnPositions: boolean[] = [];
@@ -25,17 +24,15 @@ export default class Spawner extends GameObject {
         this.spawnSpacing = this.scene.getSize().x / 5;
     }
 
-    public tick(): void {
-        if (this.tickCounter >= this.nextSpawn) {
-            this.spawnEnemy();
-            this.updateNextSpawn();
+    protected onTick(frame: number): void {
+        if (frame >= this.nextSpawn) {
+            this.spawnEnemy(frame);
+            this.updateNextSpawn(frame);
         }
-
-        this.tickCounter++;
     }
 
-    private spawnEnemy() {
-        const enemy = this.createEnemy();
+    private spawnEnemy(currentFrame: number) {
+        const enemy = this.createEnemy(currentFrame);
         this.scene.addObject(enemy)
 
         const enemySize = enemy.getComponent(Texture).getSize()
@@ -50,8 +47,8 @@ export default class Spawner extends GameObject {
         enemy.getComponent(Position).set(new Vector(x, y));
     }
 
-    private createEnemy(): GameObject {
-        const rockProb = this.GET_ROCK_PROB(this.tickCounter);
+    private createEnemy(currentFrame: number): GameObject {
+        const rockProb = this.GET_ROCK_PROB(currentFrame);
         const ufoProb = 0 // this.GET_UFO_PROB(this.tickCounter);
 
         const random = Math.random() * (rockProb + ufoProb)
@@ -64,8 +61,8 @@ export default class Spawner extends GameObject {
         }
     }
 
-    private updateNextSpawn(): void {
-        this.nextSpawn = this.tickCounter + this.START_DELAY - this.tickCounter * this.LINEAR_DELAY_DECREASE;
+    private updateNextSpawn(currentFrame: number): void {
+        this.nextSpawn = currentFrame + this.START_DELAY - currentFrame * this.LINEAR_DELAY_DECREASE;
     }
 
     private updateSpawnPositions(latestSpawnCenter: number) {

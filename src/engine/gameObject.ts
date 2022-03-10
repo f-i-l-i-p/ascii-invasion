@@ -9,8 +9,7 @@ export default abstract class GameObject {
     public tag: string = ""
     public scene: Scene
 
-    constructor(ignored?: any) { // TODO: Remove ignored
-    }
+    constructor(ignored?: any) { } // TODO: Remove constructor
 
     public addComponent<T extends Component>(component: cType<T>): T {
         return this.scene.componentManager.addComponent(this, component)
@@ -18,14 +17,18 @@ export default abstract class GameObject {
 
     public getComponent<T extends Component>(component: cType<T>): T {
         return this.scene.componentManager.getComponent(this, component)
-}
+    }
 
-    public tick(frame: number) {
+    public tickGameObject(frame: number) {
+        this.onTick(frame)
+
         let components = this.scene.componentManager.getGoComponents(this)
         for (let i = 0; i < components.length; i++) {
             components[i].update(frame)
         }
     }
+
+    protected onTick(frame: number): void { }
 
     /**
      * Initializes this game object.

@@ -17,8 +17,6 @@ export default class Rock extends Enemy {
             this.lastHealth = this.health;
             this.updateTexture();
         }
-
-        super.tick();
     }
 
     private updateTexture() {

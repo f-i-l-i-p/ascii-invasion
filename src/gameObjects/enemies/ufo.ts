@@ -32,8 +32,6 @@ export default class UFO extends Enemy {
             this.texture.setPixel(2 + 2 * this.animationCounter, 2, { char: '~', color: Color.Yellow });
         }
         this.counter++;
-
-        super.tick();
     }
     
     private createBullet(): void {
