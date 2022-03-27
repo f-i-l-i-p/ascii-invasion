@@ -1,4 +1,4 @@
-import IDrawable from "../../core/drawing/drawable";
+import IDrawable from "../../graphics/drawable";
 import GridWorld from "../../core/gridWorld";
 import Vector from "../../core/vector";
 import GameText from "./gameText";

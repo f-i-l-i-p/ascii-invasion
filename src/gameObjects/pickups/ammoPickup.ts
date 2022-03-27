@@ -1,4 +1,4 @@
-import Texture from "../../core/drawing/texture/texture";
+import Texture from "../../graphics/texture/texture";
 import { ammoPickupData } from "../../textures/pixelData";
 import createPixels from "../../textures/textureMaker";
 import Player from "../player";

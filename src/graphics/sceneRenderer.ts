@@ -1,6 +1,6 @@
-import Texture from "../../components/texture";
-import Scene from "../../engine/scene";
-import Vector from "../vector";
+import Texture from "../components/texture";
+import Scene from "../engine/scene";
+import Vector from "../core/vector";
 import Color from "./texture/color";
 import Pixel, { emptyPixel } from "./texture/pixel";
 

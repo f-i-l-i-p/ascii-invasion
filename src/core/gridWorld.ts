@@ -1,11 +1,11 @@
 import Vector from "./vector";
-import IDrawable from "./drawing/drawable";
+import IDrawable from "../graphics/drawable";
 import Player from "../gameObjects/player";
 import TickListener from "./listeners/tickListener";
 import EnemySpawner from "../gameObjects/enemySpawner";
 import Entity from "../gameObjects/entity";
 import ICollisionListener from "./listeners/collisionListener";
-import Pixel, { emptyPixel } from "./drawing/texture/pixel";
+import Pixel, { emptyPixel } from "../graphics/texture/pixel";
 import PickupSpawner from "../gameObjects/pickupSpawner";
 
 export default class GridWorld {

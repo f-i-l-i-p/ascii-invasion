@@ -1,4 +1,4 @@
-import Vector from "../../vector";
+import Vector from "../../core/vector";
 import Pixel from "./pixel";
 
 export default class Texture {

@@ -1,4 +1,4 @@
-import Color from "../../core/drawing/texture/color";
+import Color from "../../graphics/texture/color";
 import CollisionListener from "../../core/listeners/collisionListener";
 import TickListener from "../../core/listeners/tickListener";
 import Vector from "../../core/vector";

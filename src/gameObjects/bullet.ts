@@ -1,4 +1,4 @@
-import Texture from "../core/drawing/texture/texture";
+import Texture from "../graphics/texture/texture";
 import GridWorld from "../core/gridWorld";
 import ICollisionListener from "../core/listeners/collisionListener";
 import TickListener from "../core/listeners/tickListener";
@@ -7,7 +7,7 @@ import createPixels from "../textures/textureMaker";
 import { bulletData } from "../textures/pixelData";
 import Entity from "./entity";
 import Player from "./player";
-import Color from "../core/drawing/texture/color";
+import Color from "../graphics/texture/color";
 import Explosion from "./particles/explosion";
 import Living from "./living";
 import Enemy from "./enemies/enemy";

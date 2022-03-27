@@ -1,5 +1,5 @@
 import Vector from "../../core/vector";
-import Color from "../../core/drawing/texture/color";
+import Color from "../../graphics/texture/color";
 import ParticleCloud, { Particle } from "./particleCloud";
 import GridWorld from "../../core/gridWorld";
 

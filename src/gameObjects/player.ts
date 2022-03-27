@@ -1,5 +1,5 @@
-import Color from "../core/drawing/texture/color";
-import Texture from "../core/drawing/texture/texture";
+import Color from "../graphics/texture/color";
+import Texture from "../graphics/texture/texture";
 import ICollisionListener from "../core/listeners/collisionListener";
 import TickListener from "../core/listeners/tickListener";
 import Vector from "../core/vector";

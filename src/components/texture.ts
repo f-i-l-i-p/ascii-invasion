@@ -1,4 +1,4 @@
-import Pixel from "../core/drawing/texture/pixel";
+import Pixel from "../graphics/texture/pixel";
 import Vector from "../core/vector";
 import Component from "../engine/component";
 import Position from "./position";

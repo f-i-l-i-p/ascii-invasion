@@ -1,5 +1,5 @@
-import Color from "../../core/drawing/texture/color";
-import Texture from "../../core/drawing/texture/texture";
+import Color from "../../graphics/texture/color";
+import Texture from "../../graphics/texture/texture";
 import createPixels from "../../textures/textureMaker";
 import { ufoData } from "../../textures/pixelData";
 import Bullet from "../bullet";

@@ -1,5 +1,5 @@
-import Color from "../core/drawing/texture/color";
-import Pixel from "../core/drawing/texture/pixel";
+import Color from "../graphics/texture/color";
+import Pixel from "../graphics/texture/pixel";
 
 export interface PixelData {
     chars: string[],

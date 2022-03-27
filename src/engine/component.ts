@@ -1,3 +1,4 @@
+import ComponentManger from "./componentManager";
 import GameObject from "./gameObject";
 
 export default abstract class Component {

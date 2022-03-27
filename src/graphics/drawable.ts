@@ -1,4 +1,4 @@
-import Vector from "../vector";
+import Vector from "../core/vector";
 import Pixel from "./texture/pixel";
 
 export default interface IDrawable {

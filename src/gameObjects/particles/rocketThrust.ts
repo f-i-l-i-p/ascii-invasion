@@ -1,4 +1,4 @@
-import Color from "../../core/drawing/texture/color";
+import Color from "../../graphics/texture/color";
 import Vector from "../../core/vector";
 import ParticleCloud, { Particle } from "./particleCloud";
 

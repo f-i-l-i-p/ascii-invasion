@@ -35,7 +35,7 @@ export default class Scene {
      */
     public addObject(go: GameObject) {
         this.gameObjects.push(go)
-        go.scene = this
+        go.setScene(this)
         go.init()
     }
 

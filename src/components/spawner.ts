@@ -1,10 +1,11 @@
-import Position from "../components/position";
-import Texture from "../components/texture";
+import Position from "./position";
+import Texture from "./texture";
 import Vector from "../core/vector";
 import GameObject from "../engine/gameObject";
-import Rock from "./rock";
+import { createRock } from "../objectFactory";
+import Component from "../engine/component";
 
-export default class Spawner extends GameObject {
+export default class Spawner extends Component {
     private readonly START_DELAY = 30;
     private readonly LINEAR_DELAY_DECREASE = 0.0005;
 
@@ -17,14 +18,14 @@ export default class Spawner extends GameObject {
     private spawnSpacing: number;
 
     public init() {
-        for (let i = 0; i < this.scene.getSize().x; i++) {
+        for (let i = 0; i < this.gameObject.scene.getSize().x; i++) {
             this.spawnPositions.push(true);
         }
 
-        this.spawnSpacing = this.scene.getSize().x / 5;
+        this.spawnSpacing = this.gameObject.scene.getSize().x / 5;
     }
 
-    protected onTick(frame: number): void {
+    public update(frame: number): void {
         if (frame >= this.nextSpawn) {
             this.spawnEnemy(frame);
             this.updateNextSpawn(frame);
@@ -33,7 +34,7 @@ export default class Spawner extends GameObject {
 
     private spawnEnemy(currentFrame: number) {
         const enemy = this.createEnemy(currentFrame);
-        this.scene.addObject(enemy)
+        this.gameObject.scene.addObject(enemy)
 
         const enemySize = enemy.getComponent(Texture).getSize()
 
@@ -54,7 +55,7 @@ export default class Spawner extends GameObject {
         const random = Math.random() * (rockProb + ufoProb)
 
         if (random < rockProb) {
-            return new Rock();
+            return createRock();
         }
         else if (random < rockProb + ufoProb) {
             //return new UFO(this.gridWorld, new Vector(0, 0));
