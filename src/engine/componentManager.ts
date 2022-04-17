@@ -1,7 +1,7 @@
 import Component from "./component"
 import GameObject from "./gameObject"
 
-export type cType<T extends Component> = new (go: GameObject) => T
+export type ComponentType<T extends Component> = new (go: GameObject) => T
 
 export default class ComponentManger {
     private componentMap: Map<string, Component[]> = new Map()
@@ -13,7 +13,7 @@ export default class ComponentManger {
      * @param component Component to create.
      * @returns The added component.
      */
-    public addComponent<T extends Component>(go: GameObject, component: cType<T>): T {
+    public addComponent<T extends Component>(go: GameObject, component: ComponentType<T>): T {
         let c = new component(go)
 
         let components: Component[]
@@ -43,7 +43,7 @@ export default class ComponentManger {
      * @param go Game object with component.
      * @param c Component type to get.
      */
-    public getComponent<T extends Component>(go: GameObject, c: cType<T>): T {
+    public getComponent<T extends Component>(go: GameObject, c: ComponentType<T>): T {
         const tag = this.getTag(c)
         const components = this.gameObjectMap.get(go)
 
@@ -60,7 +60,7 @@ export default class ComponentManger {
      * Returns all components of a specified type.
      * @param c Component type
      */
-    public getComponents<T extends Component>(c: cType<T>): T[] {
+    public getComponents<T extends Component>(c: ComponentType<T>): T[] {
         const components = this.componentMap.get(this.getTag(c))
         if (components === undefined) {
             return []
@@ -97,7 +97,7 @@ export default class ComponentManger {
         this.gameObjectMap.delete(go)
     }
 
-    private getTag<T extends Component>(c: cType<T>): string {
+    private getTag<T extends Component>(c: ComponentType<T>): string {
         return new c(null).tag
     }
 }

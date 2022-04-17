@@ -1,6 +1,6 @@
 import GridWorld from "../core/gridWorld";
 import Component from "./component";
-import { cType } from "./componentManager";
+import { ComponentType } from "./componentManager";
 import Scene from "./scene";
 
 export default class GameObject {
@@ -9,9 +9,9 @@ export default class GameObject {
     public tag: string = ""
     public scene: Scene
 
-    private waitingComponents: cType<Component>[]
+    private waitingComponents: ComponentType<Component>[]
 
-    constructor(...components: cType<Component>[]) {
+    constructor(...components: ComponentType<Component>[]) {
         this.waitingComponents = [...components]
     }
 
@@ -32,7 +32,7 @@ export default class GameObject {
      * Adds a component to this game object.
      * If the scene has not been set, the component will be added once it is set.
      */
-    public addComponent<T extends Component>(component: cType<T>): T {
+    public addComponent<T extends Component>(component: ComponentType<T>): T {
         if (!this.scene) {
             this.waitingComponents.push(component)
         } else {
@@ -40,7 +40,7 @@ export default class GameObject {
         }
     }
 
-    public getComponent<T extends Component>(component: cType<T>): T {
+    public getComponent<T extends Component>(component: ComponentType<T>): T {
         return this.scene.componentManager.getComponent(this, component)
     }
 

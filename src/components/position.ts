@@ -41,6 +41,11 @@ export default class Position extends Component {
         return this.pos.y
     }
 
+    public move(dist: Vector) {
+        this.pos.add(dist)
+        this.notifyListeners()
+    } 
+    
     public moveX(dist: number) {
         this.pos.x += dist
         this.notifyListeners()
@@ -51,13 +56,18 @@ export default class Position extends Component {
         this.notifyListeners()
     }
 
-    public move(dist: Vector) {
-        this.pos.add(dist)
-        this.notifyListeners()
-    } 
-
     public set(pos: Vector) {
         this.pos.set(pos)
+        this.notifyListeners()
+    }
+
+    public setX(x: number) {
+        this.pos.x = x
+        this.notifyListeners()
+    }
+
+    public setY(y: number) {
+        this.pos.y = y
         this.notifyListeners()
     }
 }

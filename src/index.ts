@@ -1,8 +1,7 @@
 import SceneRenderer from "./graphics/sceneRenderer"
 import Vector from "./core/vector"
 import Scene from "./engine/scene"
-import Spawner from "./components/spawner"
-import { createSpawner } from "./objectFactory"
+import { createPlayer, createSpawner } from "./objectFactory"
 
 /**
  * Main class that initializes the game and runs the game loop.
@@ -24,6 +23,7 @@ class Game {
 
         this.scene = new Scene(SCENE_SIZE)
         this.scene.addObject(createSpawner())
+        this.scene.addObject(createPlayer())
 
         this.gridRenderer = new SceneRenderer(this.scene, context)
 

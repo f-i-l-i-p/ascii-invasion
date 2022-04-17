@@ -8,6 +8,8 @@ export default class Texture extends Component {
     public position: Position
 
     public init(): void {
+        // The position is needed for the renderer to know where to draw the texture.
+        // It is not used by the texture itself.
         this.position = this.gameObject.getComponent(Position)
     }
 
